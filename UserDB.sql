@@ -24,13 +24,14 @@ CREATE TABLE User_body(
 	current_weight	INTEGER,
 	goal_weight		INTEGER,
 	goals		VARCHAR(50), 
+	age			INTEGER, 
 	FOREIGN KEY (userID) REFERENCES User_info(userID)
 );
 
-INSERT INTO User_body(userID, height, current_weight, goal_weight)
-	VALUES (1, 72, 200, 175);
-INSERT INTO User_body(userID, height, current_weight, goal_weight)
-	VALUES (2, 72, 150, 135);
+INSERT INTO User_body(userID, height, current_weight, goal_weight, age)
+	VALUES (1, 72, 200, 175, 21);
+INSERT INTO User_body(userID, height, current_weight, goal_weight, age)
+	VALUES (2, 72, 150, 135, 30);
 
 
 CREATE TABLE User_Pref (
