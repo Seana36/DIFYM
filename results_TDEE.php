@@ -18,7 +18,7 @@ $REE = 66 + (6.2 * $weight) + (12.7 * $height) - (6.76 * $age);
 
 $TDEE = $REE * $activityLevel; 
 
-header('Location:calc_BMI.php?REE='.$REE.'&TDEE='.$TDEE.'&weight='.$weight);
+header('Location:calc_TDEE.php?REE='.$REE.'&TDEE='.$TDEE.'&weight='.$weight);
 
 
 ?>

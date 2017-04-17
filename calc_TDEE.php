@@ -9,7 +9,7 @@ include_once('isLoggedIn.php');
 $weight = $_SESSION['user_weight']; 
 $height = $_SESSION['user_height'];
 $age = $_SESSION['user_age'];  
-echo $weight; 
+#echo $weight; 
 
 ?>
 
@@ -20,11 +20,11 @@ echo $weight;
 if(isset($_GET["REE"]) ){
 	$REE = $_GET["REE"] ;
 }
-echo "<br>";
+#echo "<br>";
 if(isset($_GET["TDEE"]) ){
 	$TDEE = $_GET["TDEE"] ;
 }
-echo "<br>";
+#echo "<br>";
 if(isset($_GET["weight"]) ){
 	$weight = $_GET["weight"] ;
 }
@@ -33,7 +33,7 @@ if(isset($_GET["weight"]) ){
 ?>
 
 
-<form action="results_BMI.php" method="post">
+<form action="results_TDEE.php" method="post">
 	<div class ="form-group">
 		Weight (lbs): <input type="text" name="weight" value = <?php echo "$weight" ?>>
 	</div>
