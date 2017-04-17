@@ -1,6 +1,8 @@
 <?php 
 include('dbConnect.php');
 session_start();
+include_once('isLoggedIn.php');
+$user = $_SESSION['userID'];
     
 ?> 
 
@@ -23,7 +25,7 @@ Hello World, its the User Diary Page!
 
 $sql = "SELECT  *
 		FROM userdiary u,mytable t 
-		WHERE u.NDB_No = t.NDB_No
+		WHERE u.NDB_No = t.NDB_No AND u.userID = $user
 		";
 $result = $conn->query($sql);
 print_table($result); 
@@ -70,13 +72,6 @@ function calc_meal_totals($result){
 		array("Breakfast", $lunch_total["fat"], $lunch_total["carb"], $lunch_total["protein"]),
 		array("Breakfast", $dinner_total["fat"], $dinner_total["carb"], $dinner_total["protein"]),
 		); 
-	// for($row = 0; $row < 3; $row++){
-	// 	echo "<ul>";
-	// 	for($col = 0; $col < 4; $col++){
-	// 		echo "<li>".$total_total[$row][$col]."</li>";
-	// 	}
-	// 	echo "</ul>";
-	// }
 
 	return $total_total ;
 }
@@ -96,6 +91,8 @@ function print_table($result){
 	        <th>Fat </th>
 	        <th>Carb </th>
 	        <th>Protein </th>
+	        <th>Date </th>
+	        <th>Servings </th>
 	      </tr>
     	</thead>
    		<tbody>
@@ -107,6 +104,24 @@ function print_table($result){
 			if ($result->num_rows > 0) {
 			    // output data of each row
 			    while($row = $result->fetch_assoc()) {
+			    	if($row["servings"] > 1){
+			    		$servings = $row["servings"];
+			    		echo "<tr>
+			        	  <td>" . $row["NDB_No"]. "</td>
+			        	  <td>" . $row["Shrt_Desc"]."</td>
+			        	  <td>" . $row["meal"]. "</td>
+			        	  <td>" . (floatval($row["Energ_Kcal"]) * $servings). "</td>
+			        	  <td>" . (floatval($row["Lipid_Tot_g"]) * $servings). "</td>
+			        	  <td>" . (floatval($row["Carbohydrt_g"]) * $servings). "</td>
+			        	  <td>" . (floatval($row["Protein_g"]) * $servings). "</td>
+			        	  <td>" . $row["date"]. "</td> 
+			        	  <td>" . $row["servings"]. "</td> 
+			        	  <td><input type='submit' class='button' name='".$row["NDB_No"]." ' value1='".$row["meal"]."'/></td>
+			        	  </tr>";
+			        	  $carb_total += $row["Carbohydrt_g"];
+			        	  $fat_total += $row["Lipid_Tot_g"];
+			        	  $pro_total += $row["Protein_g"];
+			    	}else {
 			        echo "<tr>
 			        	  <td>" . $row["NDB_No"]. "</td>
 			        	  <td>" . $row["Shrt_Desc"]."</td>
@@ -116,11 +131,13 @@ function print_table($result){
 			        	  <td>" . $row["Carbohydrt_g"]. "</td>
 			        	  <td>" . $row["Protein_g"]. "</td>
 			        	  <td>" . $row["date"]. "</td> 
+			        	  <td>" . $row["servings"]. "</td> 
 			        	  <td><input type='submit' class='button' name='".$row["NDB_No"]." ' value1='".$row["meal"]."'/></td>
 			        	  </tr>";
 			        	  $carb_total += $row["Carbohydrt_g"];
 			        	  $fat_total += $row["Lipid_Tot_g"];
 			        	  $pro_total += $row["Protein_g"];
+			       	}
 			    }
 			} else {
 			    echo "0 results";

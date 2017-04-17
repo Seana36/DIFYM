@@ -1,38 +1,35 @@
 <?php
 session_start(); 
 include_once('dbConnect.php');
-/*include_once('isLoggedIn.php');
+include_once('isLoggedIn.php');
  
 $user = $_SESSION['userID']; 
 $id = intval($_POST['ID']);
-$meal = $_POST['meal'];*/
-$user = 1;
-$id = 2051;
-$meal = 'Breakfast'; 
+$meal = $_POST['meal'];
+$today = getdate();
+/*$user = 1;
+$id = 1006;
+$meal = 'Breakfast'; */
 
-/*echo $id; 
-echo $meal; 
-echo $id; */
-$sql11 = "SELECT servings FROM UserDiary WHERE userID = $user AND meal = '$meal' and NDB_NO = $id AND date =  '2017-10-06' "; 
+$sql11 = "SELECT u.servings, u.NDB_NO, t.Energ_Kcal, t.Protein_g, t.Lipid_Tot_g , t.Carbohydrt_g FROM userdiary u, mytable t WHERE userID = $user AND meal = '$meal' and u.NDB_NO = $id AND date = $date AND u.NDB_NO = t.NDB_NO "; 
 
-/*$sql = "INSERT INTO UserDiary(userID, meal, NDB_NO, date) VALUES ($user, '$meal' ,$id, '2017-10-06')";*/
 $sql2 = "SELECT count FROM Freq_Item WHERE userID = '$user'  AND NDB_NO = $id "; 
-
 
 $result11 = $conn->query($sql11);
 if($result11->num_rows > 0) {
+	echo "<script> console.log('inside first if') </script>";
 	while($row = $result11->fetch_assoc()) {
 		$servings = intval($row['servings']) + 1; 
-		var_dump($row['servings']);
 		echo "<script> console.log($servings) </script>";
-		#$sql = "INSERT INTO UserDiary(userID, meal, NDB_NO, date, servings) VALUES ($user, '$meal' ,$id, '2017-10-06', $servings)";
-		$sql = "UPDATE UserDiary SET servings = $servings WHERE userID = $user AND NDB_NO = $id AND meal = '$meal' AND date = '2017-10-06'"; 
+		$sql = "UPDATE UserDiary 
+				SET servings = $servings 
+				WHERE userID = $user AND NDB_NO = $id AND meal = '$meal' AND date = $date"; 
 		$result = $conn->query($sql);
 	}
 }
 else 
 {
-	$sql = "INSERT INTO UserDiary(userID, meal, NDB_NO, date, servings) VALUES ($user, '$meal' ,$id, '2017-10-06', 1)";
+	$sql = "INSERT INTO UserDiary(userID, meal, NDB_NO, date, servings) VALUES ($user, '$meal' ,$id, $date, 1)";
 	$result = $conn->query($sql);
 }
 
