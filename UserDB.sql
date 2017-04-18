@@ -1,5 +1,5 @@
 CREATE TABLE User_info (
-		userID		INTEGER NOT NULL PRIMARY KEY, 
+		userID		INTEGER PRIMARY KEY AUTO_INCREMENT, 
 		userName	VARCHAR(20),
 		password	VARCHAR(20),
 		fName		VARCHAR(20),
@@ -8,13 +8,13 @@ CREATE TABLE User_info (
 		securityA	VARCHAR(40)
 	);
 
-INSERT INTO User_info(userID, userName, 
+INSERT INTO User_info(userName, 
 	password, fName, lName, securityQ, securityA) VALUES 
-	(1, 'SeanUserName', 'password1', 'Sean', 'Test', 
+	('SeanUserName', 'password1', 'Sean', 'Test', 
 		'What is SCSUs Mascot?', 'Owls, Hoot Hoot!');
-INSERT INTO User_info(userID, userName, 
+INSERT INTO User_info(userName, 
 	password, fName, lName, securityQ, securityA) VALUES 
-	(2, 'User', 'password2', 'Sean2', 'Test2', 
+	('User', 'password2', 'Sean2', 'Test2', 
 		'What is SCSUs Mascot?', 'Owls, Hoot Hoot!');
 
 
