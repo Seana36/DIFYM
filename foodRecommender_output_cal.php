@@ -1,6 +1,6 @@
 <?php 
 include('dbConnect.php');
-//session_start();
+session_start();
     
 ?> 
 
@@ -9,16 +9,21 @@ include('dbConnect.php');
 
 $cal = intval($_POST["calories"]);
 
+if(isset($_SESSION['user'])){
+
+
+	$user = $_SESSION['user']; 
+
 
 
 $sql = "SELECT * FROM mytable WHERE 
-		Energ_Kcal BETWEEN $cal AND $cal+1 
+		Energ_Kcal BETWEEN $cal AND $cal+20 
 		ORDER BY Energ_Kcal, Protein_g DESC, Carbohydrt_g DESC
 		";
 $result = $conn->query($sql);
 ?> 
 <div class = "container">
-You are searching for Calories between <?php echo $cal ?> and <?php echo $cal+1 ?> grams. <br>  
+You are searching for Calories between <?php echo $cal ?> and <?php echo $cal+20 ?> grams. <br>  
 	<table class="table table-striped">
 		<thead>
 	      <tr>
@@ -76,3 +81,6 @@ You are searching for Calories between <?php echo $cal ?> and <?php echo $cal+1 
 
 });
 </script>
+<?php 
+} //end isset(session[user])
+?>

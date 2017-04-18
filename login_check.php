@@ -16,7 +16,7 @@ if($entry > 0)
 {
 	$_SESSION['loggedIn'] = TRUE;
 	$_SESSION["name"] = $entry[0] . " " . $entry[1];
-	$_SESSION["userID"] = $entry[2];
+	$_SESSION["user"] = $entry[2];
 	header('Location:homepage_table.php');
 }
 

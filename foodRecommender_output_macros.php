@@ -3,17 +3,21 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
 </head>
 <?php 
-/*session_start();*/
+session_start();
 include('dbConnect.php');
-
+//include('isLoggedIn.php');
     
 
 $carbs     = intval($_POST["carbs"]);
 $fat       = intval($_POST["fats"]);
 $prot      = intval($_POST["protein"]);
-var_dump($carbs);
+if(isset($_SESSION['user'])){
+
+
+$user      = $_SESSION['user']; 
+/*var_dump($carbs);
 var_dump($fat);
-var_dump($prot);
+var_dump($prot);*/
 
 
 $sql = "SELECT * FROM mytable WHERE 
@@ -24,7 +28,7 @@ $sql = "SELECT * FROM mytable WHERE
 $result = $conn->query($sql);
 
 /*$_SESSION['result1'] = $result; 
-*/var_dump($result);
+var_dump($result);*/
 ?>
 <body> 
 <table class="table table-striped">
@@ -86,6 +90,13 @@ $(document).ready(function(){
   });
 });
 </script>
+
+<?php 
+}  //ends isset()
+else {
+  echo "You are not logged in";
+}
+?> 
 
 
     <!-- jQuery -->

@@ -38,11 +38,7 @@ session_start();
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-    <?php 
-    $carbs = intval($_POST["carbs"]);
-    $fat   = intval($_POST["fats"]);
-    $prot  = intval($_POST["protein"]);
-    ?>
+
 
 </head>
 
@@ -98,9 +94,7 @@ session_start();
                     <h2 class="section-heading">What you Serached for </h2>
                     <hr class="light">
                     <p class="text-faded">
-                        You are searching for Protein between <?php echo $prot ?> and <?php echo $prot+1 ?> grams. <br>
-                        You are searching for Fat between <?php echo $fat ?> and <?php echo $fat+1 ?> grams. <br>
-                        You are searching for Carbs between <?php echo $carbs ?> and <?php echo $carbs+1 ?> grams.
+                        something here
                     </p>
                     <a href="#services" class="page-scroll btn btn-default btn-xl sr-button">Get Started!</a>
                 </div>
@@ -120,60 +114,67 @@ session_start();
         <div class="container">
             <div class="row">
 
-            <?php
+<?php
 
-            if(isset($_SESSION['user'])){
 
-            $sql = "SELECT * FROM mytable WHERE 
-                    Protein_g BETWEEN $prot AND $prot+5  AND
-                    Lipid_Tot_g BETWEEN $fat AND $prot+5 AND
-                    Carbohydrt_g BETWEEN $carbs AND $carbs+5
-                    Order BY Protein_g DESC, Energ_Kcal ASC
-                    ";
-            $result = $conn->query($sql);
-            ?> 
-            <div class = "container"> 
-                <table class="table table-striped">
-                    <thead>
-                      <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Calories </th>
-                        <th>Protein</th>
-                        <th>Carbs</th>
-                        <th>Fat </th>
-                        <th>Add To:  </th>
-                        <th> </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                        <?php
+if(isset($_SESSION['user'])){
 
-                        if ($result->num_rows > 0) {
-                            // output data of each row
-                            while($row = $result->fetch_assoc()) {
-                                echo "<tr>
-                                      <td>" . $row["NDB_No"]. "</td>
-                                      <td>" . $row["Shrt_Desc"]."</td>
-                                      <td>" . $row["Energ_Kcal"]. "</td>
-                                      <td>" . $row["Protein_g"]. "</td>
-                                      <td>" . $row["Carbohydrt_g"]. "</td>
-                                      <td>" . $row["Lipid_Tot_g"]. "</td>
-                                      <td> <input type='submit' class='btn' name='".$row["NDB_No"]." ' value='breakfast' />  <br>
-                                       <input type='submit' class='btn' name='".$row["NDB_No"]." ' value='lunch' />  </td>
-                                      <td> 
-                                       <input type='submit' class='btn' name='".$row["NDB_No"]." ' value='dinner' /> <br>
-                                       <input type='submit' class='btn' name='".$row["NDB_No"]." ' value='snack' /> </td>
-                                      </tr>";
-                            }
-                        } else {
-                            echo "0 results";
-                        }
-}//end isset 
-                        ?>
-                    </tbody>
-                </table>
-            </div>
+	$cal = intval($_POST["calories"]);
+	$user = $_SESSION['user']; 
+
+	$sql = "SELECT * FROM mytable WHERE 
+			Energ_Kcal BETWEEN $cal AND $cal+20 
+			ORDER BY Energ_Kcal, Protein_g DESC, Carbohydrt_g DESC
+			";
+	$result = $conn->query($sql);
+	?> 
+	<div class = "container">
+	You are searching for Calories between <?php echo $cal ?> and <?php echo $cal+20 ?> grams. <br>  
+		<table class="table table-striped">
+			<thead>
+		      <tr>
+		        <th>ID</th>
+		        <th>Name</th>
+		        <th>Calories </th>
+		        <th>Protein</th>
+		        <th>Carbs</th>
+		        <th>Fat </th>
+		        <th>Add To:  </th>
+		        <th> </th>
+		      </tr>
+	    	</thead>
+	   		<tbody>
+				<?php
+
+				if ($result->num_rows > 0) {
+				    // output data of each row
+				    while($row = $result->fetch_assoc()) {
+				        echo "<tr>
+				        	  <td>" . $row["NDB_No"]. "</td>
+				        	  <td>" . $row["Shrt_Desc"]."</td>
+				        	  <td>" . $row["Energ_Kcal"]. "</td>
+				        	  <td>" . $row["Protein_g"]. "</td>
+				        	  <td>" . $row["Carbohydrt_g"]. "</td>
+				        	  <td>" . $row["Lipid_Tot_g"]. "</td>
+				        	  <td> <input type='submit' class='btn' name='".$row["NDB_No"]." ' value='breakfast' />  <br>
+				        	   <input type='submit' class='btn' name='".$row["NDB_No"]." ' value='lunch' />  </td>
+				        	  <td> 
+				        	   <input type='submit' class='btn' name='".$row["NDB_No"]." ' value='dinner' /> <br>
+				        	   <input type='submit' class='btn' name='".$row["NDB_No"]." ' value='snack' /> </td>
+				        	  </tr>";
+				    }//end while
+				} else {
+				    echo "0 results";
+				}//end if/else block 
+
+				?>
+			</tbody>
+		</table>
+	</div>
+
+	<?php 
+	} //end isset(session[user])
+	?>
 
 
 
@@ -341,23 +342,22 @@ session_start();
     <!-- Theme JavaScript -->
     <script src="js/creative.min.js"></script>
 
-               <script> 
-             $('.button').click(function() {
-                console.log("inside click function"); 
-                //var clickBtnValue = $(this).val();
-                var id = $(this).attr('name');
-                var meal = $(this).attr('value');
-                 $.ajax({
-                  type: "POST",
-                  url: "addto_UserDiary.php",
-                  data: { 'ID':id ,
-                          'meal' : meal}
-                }).done(function( msg ) {
-                  alert( "Data Saved: " + msg );
-                });    
+ <script> 
+ $('.button').click(function() {
+ 	//var clickBtnValue = $(this).val();
+ 	var id = $(this).attr('name');
+ 	var meal = $(this).attr('value');
+	 $.ajax({
+	  type: "POST",
+	  url: "addto_UserDiary.php",
+	  data: { 'ID':id ,
+			  'meal' : meal}
+	}).done(function( msg ) {
+	  alert( "Data Saved: " + msg );
+	});    
 
-            });
-            </script>
+});
+</script>
 
 </body>
 
