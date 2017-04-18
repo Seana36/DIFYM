@@ -116,7 +116,7 @@ function print_table($result){
 			        	  <td>" . (floatval($row["Protein_g"]) * $servings). "</td>
 			        	  <td>" . $row["date"]. "</td> 
 			        	  <td>" . $row["servings"]. "</td> 
-			        	  <td><input type='submit' class='button' name='".$row["NDB_No"]." ' value1='".$row["meal"]."'/></td>
+			        	  <td><input type='submit' class='button' name='".$row["NDB_No"]." ' value1='".$row["meal"]."' value ='Delete'/></td>
 			        	  </tr>";
 			        	  $carb_total += $row["Carbohydrt_g"];
 			        	  $fat_total += $row["Lipid_Tot_g"];
@@ -132,7 +132,7 @@ function print_table($result){
 			        	  <td>" . $row["Protein_g"]. "</td>
 			        	  <td>" . $row["date"]. "</td> 
 			        	  <td>" . $row["servings"]. "</td> 
-			        	  <td><input type='submit' class='button' name='".$row["NDB_No"]." ' value1='".$row["meal"]."'/></td>
+			        	  <td><input type='submit' class='button' name='".$row["NDB_No"]." ' value1='".$row["meal"]."' value = 'Delete'/></td>
 			        	  </tr>";
 			        	  $carb_total += $row["Carbohydrt_g"];
 			        	  $fat_total += $row["Lipid_Tot_g"];
