@@ -2,6 +2,13 @@
 <html lang="en">
 
 <head>
+    <?php 
+    include('dbConnect.php');
+    session_start();
+    echo "<script> console.log('User #: ".$_SESSION['user']."'); </script>"; 
+    //include('isLoggedIn.php');
+
+    ?> 
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -32,21 +39,11 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <!-- Load Ajax - Sean -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
 
-<?php 
-session_start(); 
-$showDivFlag = false; 
-if(isset($_SESSION["result1"]) ){
-    echo "<script>alert('Hello! I am an alert box!!'); </script>";
-    $result = $_SESSION["result1"];
-    var_dump($result);
-    $showDivFlag=true;
-}
-else{
-    echo "<script>alert('DIDNT WORK!!');</script>";
-}
-     
-?>
+
+
 
 
 
@@ -105,23 +102,23 @@ else{
                     <h2 class="section-heading">Look up by Macros</h2>
                     <hr class="light">
 
-                     <form action="foodRecommender_output_macros.php" method="post"> 
+                     <!-- <form action="foodRecommender_output_macros.php" method="post">  -->
 
                     <div class ="form-group">
-						Fat: <input type="text" name="fat" >
+						Fat: <input type="text" id = "fat" name="FATTIES" >
 					</div>
 					<div class ="form-group">
-						Carbs: <input type="text" name="carbs">
+						Carbs: <input type="text" id = "carbs" name="carbs">
 					</div>
 					<div class ="form-group">
-						Protein: <input type="text" name="protein">
+						Protein: <input type="text" id = "prot" name="protein">
 					</div>
 					<div class ="form-group">
-					
-						<input type="submit" class = "btn btn-default btn-xl sr-button" value="Submit_Macro" id="Submit_Macro" >
-					
+					<a class="page-scroll" href="#Search_Results">
+						<input type="submit" id = "MacroButton" class = "btn btn-default btn-xl sr-button" value="Submit_Macro" id="Submit_Macro" >
+					</a>
 					</div>
-					</form>
+					<!-- </form> -->
                 </div>
                 <div class="col-lg-6 col-lg-offset-0 text-center">
                     <h2 class="section-heading">Look up by Calories</h2>
@@ -132,7 +129,7 @@ else{
 						</div>
 						<div class ="form-group">
 						<a class="page-scroll" href="#Search_Results">
-							<input type="submit" class = "btn btn-default btn-xl sr-button" value="Submit_Cal" id="Submit_Cal" >
+							<input type="submit" id = "CalorieButton" class = "btn btn-default btn-xl sr-button" value="Submit_Cal" id="Submit_Cal" >
 							</a>
 						</div>					
 					<!-- </form> -->
@@ -156,77 +153,12 @@ else{
                 <!-- http://stackoverflow.com/questions/12032664/load-a-html-page-within-another-html-page   -->       
 
                     orange thing
-                    <div id="macroDiv" <?php if ($showDivFlag===false){?> style="display:none" <?php } ?> >
-                     
-                   
-
-                        <div class = "container">
-
-    <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Calories </th>
-            <th>Protein</th>
-            <th>Carbs</th>
-            <th>Fat </th>
-            <th>Add To:  </th>
-            <th> </th>
-          </tr>
-        </thead>
-        <tbody>
-            <?php
-
-            if ($result->num_rows > 0) {
-                // output data of each row
-                while($row = $result->fetch_assoc()) {
-                    echo "<tr>
-                          <td>" . $row["NDB_No"]. "</td>
-                          <td>" . $row["Shrt_Desc"]."</td>
-                          <td>" . $row["Energ_Kcal"]. "</td>
-                          <td>" . $row["Protein_g"]. "</td>
-                          <td>" . $row["Carbohydrt_g"]. "</td>
-                          <td>" . $row["Lipid_Tot_g"]. "</td>
-                          <td> <input type='submit' class='button' name='".$row["NDB_No"]." ' value='breakfast' />  <br>
-                           <input type='submit' class='button' name='".$row["NDB_No"]." ' value='lunch' />  </td>
-                          <td> 
-                           <input type='submit' class='button' name='".$row["NDB_No"]." ' value='dinner' /> <br>
-                           <input type='submit' class='button' name='".$row["NDB_No"]." ' value='snack' /> </td>
-                          </tr>";
-                }
-            } else {
-                echo "0 results";
-            }
-
-            ?>
-        </tbody>
-    </table>
-</div>
-<script> 
-
-
-</script>
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                  
+                    <div id="macroDiv" style="display:none" >
+                         <div class = "container"> 
+                         <span>              
+                            
+                        </span>
+                        </div>
                    </div>
                     <div id="calDiv" style="display:none;">
                     calories here
@@ -412,13 +344,28 @@ else{
 
 
 
-<script>
+<script> 
+document.getElementById("MacroButton").onclick = function() {myFunction()};
+function myFunction(){
+    console.log("inside click function"); 
+    var fat = document.getElementById('fat').value; 
+    var carbs = document.getElementById('carbs').value; 
+    var prot  = document.getElementById('prot').value; 
+    console.log(fat); 
+    $.ajax({
+      url: "foodRecommender_output_macros2.php",
+      type: "POST",
+      data: { 'FATTIES': fat,
+              'carbs': carbs,
+              'prot' : prot }
+    }).done(function( msg ) {   
+      $("#macroDiv").show();
+      $(msg).appendTo('#macroDiv span') ;
+    });
+}    
 
-function showCal() {
-	$('#Submit_Cal').closest('form').submit(); 
-	$("#calDiv").show();
-}
 </script>
+
 
 </body>
 

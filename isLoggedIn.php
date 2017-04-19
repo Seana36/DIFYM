@@ -1,5 +1,5 @@
 <?php
-    $user = $_SESSION['userID']; 
+    $user = $_SESSION['user']; 
     include_once('dbConnect.php');
 
     $sql = "SELECT * FROM User_info i, User_body b WHERE i.userID = $user AND b.userID = $user"; 
