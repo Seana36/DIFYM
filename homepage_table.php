@@ -7,6 +7,9 @@
     session_start();
     echo "<script> console.log('User #: ".$_SESSION['user']."'); </script>"; 
     //include('isLoggedIn.php');
+/*    if(isset($_SESSION['user'])){
+        $user = $_SESSION['user'];
+    }*/
 
     ?> 
 
@@ -58,25 +61,18 @@
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand page-scroll" href="#page-top">Start Bootstrap</a>
+                <a class="navbar-brand page-scroll" href="#page-top">DIFYM?</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a class="page-scroll" href="#recommender">Recommender</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="#Search_Results">Search Results</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="userDiary_Boot.php">View Diary</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="#contact">Contact</a>
-                    </li>
-                </ul>
+            <?php 
+                if(isset($_SESSION['user'])){
+                    include_once('navBars/nav_loggedIn.html');
+                }else{
+                    include_once('navBars/nav_NotloggedIn.html');
+                }
+            ?>
             </div>
             <!-- /.navbar-collapse -->
         </div>
@@ -86,10 +82,10 @@
     <header>
         <div class="header-content">
             <div class="header-content-inner">
-                <h1 id="homeHeading">Your Favorite Source of Free Bootstrap Themes</h1>
+                <h1 id="homeHeading">Welcome to Does It Fit Your Macros?</h1>
                 <hr>
-                <p>Start Bootstrap can help you build better websites using the Bootstrap CSS framework! Just download your template and start going, no strings attached!</p>
-                <a href="#about" class="btn btn-primary btn-xl page-scroll">Find Out More</a>
+                <p>Check out the searches below and see if you can find the right food to fit your macros!</p>
+                <a href="#recommender" class="btn btn-primary btn-xl page-scroll">Take me to the Searches</a>
             </div>
         </div>
     </header>
@@ -151,8 +147,6 @@
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-0 text-center">  
                 <!-- http://stackoverflow.com/questions/12032664/load-a-html-page-within-another-html-page   -->       
-
-                    orange thing
                     <div id="macroDiv" style="display:none" >
                          <div class = "container"> 
                          <span>              
@@ -170,22 +164,6 @@
             </div>
         </div>
     </section>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

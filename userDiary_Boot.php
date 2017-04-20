@@ -59,11 +59,11 @@ $user = $_SESSION['user'];
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <?php 
-            if(isset($_SESSION['user'])){
-                include_once('navBars/nav_loggedIn.html');
-            }else{
-                include_once('navBars/nav_NotloggedIn.html');
-            }
+                if(isset($_SESSION['user'])){
+                    include_once('navBars/nav_loggedIn.html');
+                }else{
+                    include_once('navBars/nav_NotloggedIn.html');
+                }
 
             ?>
 

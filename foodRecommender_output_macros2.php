@@ -1,18 +1,59 @@
 <?php 
 include('dbConnect.php');
+session_start(); 
 if( isset($_POST['FATTIES']) ){
   $fat = intval($_POST['FATTIES']);
   $carbs = intval($_POST['carbs']); 
-  $prot = 10; 
+  $prot = 10;
+  if(isset($_SESSION['user'])){
+    $user = $_SESSION['user']; 
+  } else {
+    echo "<script> console.log('You are not logged in') </script>";
+  }
+  
 
+#veggie keywords: pork, shrimp, meat, beef, turkey, chicken, bacon, hamburger, salmon, 
 
-$sql = "SELECT * FROM mytable WHERE 
-		Protein_g BETWEEN $prot AND $prot+5  AND
-		Lipid_Tot_g BETWEEN $fat AND $fat+5 AND
-		Carbohydrt_g BETWEEN $carbs AND $carbs+5
-		";
+#SELECT * FROM mytable WHERE 
+#Protein_g BETWEEN 5 AND 10  AND
+#Lipid_Tot_g BETWEEN 5 AND 10 AND 
+#Carbohydrt_g BETWEEN 5 AND 10 AND 
+#Shrt_Desc NOT LIKE '%MILK%'
+
+$sql222 = "SELECT Vegetarian FROM user_pref WHERE userID = $user "; 
+$result2 = $conn->query($sql222);
+
+if ($result2->num_rows > 0) {
+  while($row = $result2->fetch_assoc()) {
+    $veggie = $row['Vegetarian']; 
+  }
+}
+
+if ($veggie == 'Y'){
+  echo "<script> console.log('You are a veggie') </script>"; 
+  $sql = "SELECT * FROM mytable WHERE 
+    Protein_g BETWEEN $prot AND $prot+5  AND
+    Lipid_Tot_g BETWEEN $fat AND $fat+5 AND
+    Carbohydrt_g BETWEEN $carbs AND $carbs+5 AND
+    Shrt_Desc NOT LIKE '%MEAT%' AND
+    Shrt_Desc NOT LIKE '%PORK%' AND
+    Shrt_Desc NOT LIKE '%BACON%' AND 
+    Shrt_Desc NOT LIKE '%CHICKEN%' AND
+    Shrt_Desc NOT LIKE '%HAMBURGER%' AND 
+    Shrt_Desc NOT LIKE '%SALMON%' AND 
+    Shrt_Desc NOT LIKE '%SHRIMP%' AND 
+    Shrt_Desc NOT LIKE '%TURKEY%'
+    ";
+}
+else {
+  echo "<script> console.log('You are NOT veggie".$veggie."') </script>";
+  $sql = "SELECT * FROM mytable WHERE 
+    Protein_g BETWEEN $prot AND $prot+5  AND
+    Lipid_Tot_g BETWEEN $fat AND $fat+5 AND
+    Carbohydrt_g BETWEEN $carbs AND $carbs+5
+    ";
+}
 $result = $conn->query($sql);
-
 ?>
 <body> 
 <table class="table table-striped">
