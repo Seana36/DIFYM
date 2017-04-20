@@ -71,7 +71,7 @@
                         <a class="page-scroll" href="#Search_Results">Search Results</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#portfolio">Portfolio</a>
+                        <a class="page-scroll" href="userDiary_Boot.php">View Diary</a>
                     </li>
                     <li>
                         <a class="page-scroll" href="#contact">Contact</a>
@@ -98,20 +98,20 @@
     <section class="bg-primary" id="recommender">
         <div class="container">
             <div class="row">
-                <div class="col-lg-6 col-lg-offset-0 text-center">
+                <div class="col-lg-6 col-lg-offset-0 text-center" >
                     <h2 class="section-heading">Look up by Macros</h2>
                     <hr class="light">
 
                      <!-- <form action="foodRecommender_output_macros.php" method="post">  -->
 
                     <div class ="form-group">
-						Fat: <input type="text" id = "fat" name="FATTIES" >
+						Fat: <input type="text" id = "fat" name="FATTIES" style ="color:black" >
 					</div>
 					<div class ="form-group">
-						Carbs: <input type="text" id = "carbs" name="carbs">
+						Carbs: <input type="text" id = "carbs" name="carbs" style ="color:black">
 					</div>
 					<div class ="form-group">
-						Protein: <input type="text" id = "prot" name="protein">
+						Protein: <input type="text" id = "prot" name="protein" style ="color:black">
 					</div>
 					<div class ="form-group">
 					<a class="page-scroll" href="#Search_Results">
@@ -125,12 +125,12 @@
                     <hr class="light">
                     <!-- <form action="foodRecommender_output_cal.php" method="post"> -->
 	                    <div class ="form-group">
-							Calories: <input type="text" name="calories">
+							Calories: <input type="text" id = "calories" name="calories" style ="color:black">
 						</div>
 						<div class ="form-group">
-						<a class="page-scroll" href="#Search_Results">
+						<!-- <a class="page-scroll" href="#Search_Results"> -->
 							<input type="submit" id = "CalorieButton" class = "btn btn-default btn-xl sr-button" value="Submit_Cal" id="Submit_Cal" >
-							</a>
+							<!-- </a> -->
 						</div>					
 					<!-- </form> -->
                 </div>
@@ -161,7 +161,11 @@
                         </div>
                    </div>
                     <div id="calDiv" style="display:none;">
-                    calories here
+                    <div class = "container"> 
+                         <span>              
+                            
+                        </span>
+                        </div>
                    </div>
             </div>
         </div>
@@ -362,7 +366,23 @@ function myFunction(){
       $("#macroDiv").show();
       $(msg).appendTo('#macroDiv span') ;
     });
-}    
+}  
+
+document.getElementById("CalorieButton").onclick = function() {myFunction_Cal()};
+function myFunction_Cal(){
+    console.log("inside click function"); 
+    var cal = document.getElementById('calories').value; 
+    console.log(cal); 
+    $.ajax({
+      url: "foodRecommender_output_cal2.php",
+      type: "POST",
+      data: { 'calories': cal }
+    }).done(function( msg ) {   
+      $("#calDiv").show();
+      $(msg).appendTo('#calDiv span') ;
+    });
+}
+
 
 </script>
 

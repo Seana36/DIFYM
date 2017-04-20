@@ -1,8 +1,10 @@
 <?php 
 include('dbConnect.php');
 session_start();
-include_once('isLoggedIn.php');
-$user = $_SESSION['userID'];
+//include_once('isLoggedIn.php');
+if( isset($_SESSION["user"]) ){
+	$user = $_SESSION['user'];
+
     
 ?> 
 
@@ -28,6 +30,7 @@ $sql = "SELECT  *
 		WHERE u.NDB_No = t.NDB_No AND u.userID = $user
 		";
 $result = $conn->query($sql);
+var_dump($result);
 print_table($result); 
 $result = $conn->query($sql);
 $total_total = calc_meal_totals($result);
@@ -171,6 +174,8 @@ $('.button').click(function() {
 	location.reload();
 });
 </script>
-
+<?php 
+} //end isset(user)
+?>
 </body>
 </html>
