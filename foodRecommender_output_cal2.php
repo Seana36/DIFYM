@@ -41,8 +41,8 @@ You are searching for Calories between <?php echo $cal ?> and <?php echo $cal+20
 			        	  <td> <input type='submit' class='button' name='".$row["NDB_No"]." ' value='breakfast' />  <br>
 			        	   <input type='submit' class='button' name='".$row["NDB_No"]." ' value='lunch' />  </td>
 			        	  <td> 
-			        	   <input type='submit' class='button' name='".$row["NDB_No"]." ' value='dinner' /> <br>
-			        	   <input type='submit' class='button' name='".$row["NDB_No"]." ' value='snack' /> </td>
+			        	   <input type='submit'  class='button' name='".$row["NDB_No"]." ' value='dinner' /> <br>
+			        	   <input type='submit'  class='button' name='".$row["NDB_No"]." ' value='snack' /> </td>
 			        	  </tr>";
 			    }
 			} else {
@@ -54,17 +54,22 @@ You are searching for Calories between <?php echo $cal ?> and <?php echo $cal+20
 	</table>
 </div>
 <script> 
- $('.button').click(function() {
+/*document.getElementById("clickbutton").onclick = function() {myFunction()};
+*/ $('.button').click(function() {
+	/*function myFunction(){*/
  	var id = $(this).attr('name');
  	var meal = $(this).attr('value');
+ 	console.log('click the button ' + id);
+ 	console.log('click the button2 ' + meal);
 	 $.ajax({
 	  type: "POST",
 	  url: "addto_UserDiary.php",
 	  data: { 'ID':id ,
 			  'meal' : meal}
 	}).done(function( msg ) {
-	  alert( "Data Saved: " + msg );
-	});    
+	  alert( "Data Saved: " + msg);
+	});   
+/*	} */
 
 });
 </script>

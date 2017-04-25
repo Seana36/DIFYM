@@ -95,6 +95,7 @@ $user = $_SESSION['user'];
 $sql = "SELECT  *
         FROM userdiary u,mytable t 
         WHERE u.NDB_No = t.NDB_No AND u.userID = $user
+        ORDER BY meal AND date
         ";
 $result = $conn->query($sql);
 print_table($result); 
@@ -144,7 +145,448 @@ function calc_meal_totals($result){
 function print_table($result){
 ?>
 <div class = "container">
-    <table class="table ">
+
+<?php
+$carb_total = 0;
+$fat_total = 0;
+$pro_total = 0; 
+$break_count = 0; 
+$lunch_count =0; 
+$dinner_counnt = 0; 
+$other_count = 0; 
+
+
+    if ($result->num_rows > 0) {
+        while($row = $result->fetch_assoc()) {
+            if($row["meal"] == "breakfast"){
+            	if($break_count == 0 ){
+            	?>
+            	<table class="table ">
+		        <thead>
+		          <tr>
+		            <th>Item ID</th>
+		            <th>Description</th>
+		            <th>Meal </th>
+		            <th>Calories </th>
+		            <th>Fat </th>
+		            <th>Carb </th>
+		            <th>Protein </th>
+		            <th>Date </th>
+		            <th>Servings </th>
+		          </tr>
+		        </thead>
+		        <tbody>
+		        	<?php 
+		        	echo "<script> console.log(" . $break_count . ") </script>"; 
+		        	$break_count = $break_count + 1; 
+                		if($row["servings"] > 1){
+	                        $servings = $row["servings"];
+	                        echo "<tr>
+	                          <td>" . $row["NDB_No"]. "</td>
+	                          <td>" . $row["Shrt_Desc"]."</td>
+	                          <td>" . $row["meal"]. "</td>
+	                          <td>" . (floatval($row["Energ_Kcal"]) * $servings). "</td>
+	                          <td>" . (floatval($row["Lipid_Tot_g"]) * $servings). "</td>
+	                          <td>" . (floatval($row["Carbohydrt_g"]) * $servings). "</td>
+	                          <td>" . (floatval($row["Protein_g"]) * $servings). "</td>
+	                          <td>" . $row["date"]. "</td> 
+	                          <td>" . $row["servings"]. "</td> 
+	                          <td><input type='submit' class='btn btn-default' name='".$row["NDB_No"]." ' value1='".$row["meal"]."' value ='Delete'/></td>
+	                          </tr>";
+	                          $carb_total += $row["Carbohydrt_g"];
+	                          $fat_total += $row["Lipid_Tot_g"];
+	                          $pro_total += $row["Protein_g"];
+	                    }else { //if servings >1 
+	                    echo "<tr>
+	                          <td>" . $row["NDB_No"]. "</td>
+	                          <td>" . $row["Shrt_Desc"]."</td>
+	                          <td>" . $row["meal"]. "</td>
+	                          <td>" . $row["Energ_Kcal"]. "</td>
+	                          <td>" . $row["Lipid_Tot_g"]. "</td>
+	                          <td>" . $row["Carbohydrt_g"]. "</td>
+	                          <td>" . $row["Protein_g"]. "</td>
+	                          <td>" . $row["date"]. "</td> 
+	                          <td>" . $row["servings"]. "</td> 
+	                          <td><input type='submit' class='btn btn-default' name='".$row["NDB_No"]." ' value1='".$row["meal"]."' value = 'Delete'/></td>
+	                          </tr>";
+	                          $carb_total += $row["Carbohydrt_g"];
+	                          $fat_total += $row["Lipid_Tot_g"];
+	                          $pro_total += $row["Protein_g"];
+	                    }//end else 
+            	}//break_count == 0 
+            	else {
+            		echo "<script> console.log(" . $break_count . ") </script>"; 
+            		?><tbody><?php
+            		$break_count = $break_count + 1; 
+                		if($row["servings"] > 1){
+	                        $servings = $row["servings"];
+	                        echo "<tr>
+	                          <td>" . $row["NDB_No"]. "</td>
+	                          <td>" . $row["Shrt_Desc"]."</td>
+	                          <td>" . $row["meal"]. "</td>
+	                          <td>" . (floatval($row["Energ_Kcal"]) * $servings). "</td>
+	                          <td>" . (floatval($row["Lipid_Tot_g"]) * $servings). "</td>
+	                          <td>" . (floatval($row["Carbohydrt_g"]) * $servings). "</td>
+	                          <td>" . (floatval($row["Protein_g"]) * $servings). "</td>
+	                          <td>" . $row["date"]. "</td> 
+	                          <td>" . $row["servings"]. "</td> 
+	                          <td><input type='submit' class='btn btn-default' name='".$row["NDB_No"]." ' value1='".$row["meal"]."' value ='Delete'/></td>
+	                          </tr>";
+	                          $carb_total += $row["Carbohydrt_g"];
+	                          $fat_total += $row["Lipid_Tot_g"];
+	                          $pro_total += $row["Protein_g"];
+	                    }else { //if servings >1 
+	                    echo "<tr>
+	                          <td>" . $row["NDB_No"]. "</td>
+	                          <td>" . $row["Shrt_Desc"]."</td>
+	                          <td>" . $row["meal"]. "</td>
+	                          <td>" . $row["Energ_Kcal"]. "</td>
+	                          <td>" . $row["Lipid_Tot_g"]. "</td>
+	                          <td>" . $row["Carbohydrt_g"]. "</td>
+	                          <td>" . $row["Protein_g"]. "</td>
+	                          <td>" . $row["date"]. "</td> 
+	                          <td>" . $row["servings"]. "</td> 
+	                          <td><input type='submit' class='btn btn-default' name='".$row["NDB_No"]." ' value1='".$row["meal"]."' value = 'Delete'/></td>
+	                          </tr>";
+	                          $carb_total += $row["Carbohydrt_g"];
+	                          $fat_total += $row["Lipid_Tot_g"];
+	                          $pro_total += $row["Protein_g"];
+	                    }//end else 
+            	}//break count != 0 
+      
+
+           
+/*<!--         	</tbody>
+		    </table> -->*/
+		  
+            }
+            else if($row["meal"] == "lunch"){
+            	if($lunch_count == 0 ){
+            	?>
+            	</tbody>
+		    	</table> 
+            	<table class="table ">
+		        <thead>
+		          <tr>
+		            <th>Item ID</th>
+		            <th>Description</th>
+		            <th>Meal </th>
+		            <th>Calories </th>
+		            <th>Fat </th>
+		            <th>Carb </th>
+		            <th>Protein </th>
+		            <th>Date </th>
+		            <th>Servings </th>
+		          </tr>
+		        </thead>
+		        <tbody>
+		        <script> console.log("lunch"); </script>
+		        	<?php 
+		        	echo "<script> console.log(" . $lunch_count . "); </script>"; 
+		        	$lunch_count = $lunch_count + 1; 
+                		if($row["servings"] > 1){
+	                        $servings = $row["servings"];
+	                        echo "<tr>
+	                          <td>" . $row["NDB_No"]. "</td>
+	                          <td>" . $row["Shrt_Desc"]."</td>
+	                          <td>" . $row["meal"]. "</td>
+	                          <td>" . (floatval($row["Energ_Kcal"]) * $servings). "</td>
+	                          <td>" . (floatval($row["Lipid_Tot_g"]) * $servings). "</td>
+	                          <td>" . (floatval($row["Carbohydrt_g"]) * $servings). "</td>
+	                          <td>" . (floatval($row["Protein_g"]) * $servings). "</td>
+	                          <td>" . $row["date"]. "</td> 
+	                          <td>" . $row["servings"]. "</td> 
+	                          <td><input type='submit' class='btn btn-default' name='".$row["NDB_No"]." ' value1='".$row["meal"]."' value ='Delete'/></td>
+	                          </tr>";
+	                          $carb_total += $row["Carbohydrt_g"];
+	                          $fat_total += $row["Lipid_Tot_g"];
+	                          $pro_total += $row["Protein_g"];
+	                    }else { //if servings >1 
+	                    echo "<tr>
+	                          <td>" . $row["NDB_No"]. "</td>
+	                          <td>" . $row["Shrt_Desc"]."</td>
+	                          <td>" . $row["meal"]. "</td>
+	                          <td>" . $row["Energ_Kcal"]. "</td>
+	                          <td>" . $row["Lipid_Tot_g"]. "</td>
+	                          <td>" . $row["Carbohydrt_g"]. "</td>
+	                          <td>" . $row["Protein_g"]. "</td>
+	                          <td>" . $row["date"]. "</td> 
+	                          <td>" . $row["servings"]. "</td> 
+	                          <td><input type='submit' class='btn btn-default' name='".$row["NDB_No"]." ' value1='".$row["meal"]."' value = 'Delete'/></td>
+	                          </tr>";
+	                          $carb_total += $row["Carbohydrt_g"];
+	                          $fat_total += $row["Lipid_Tot_g"];
+	                          $pro_total += $row["Protein_g"];
+	                    }//end else 
+            	}//lunch_count == 0 
+            	else {
+            		echo "<script> console.log(" . $lunch_count . ") </script>"; 
+            		?><tbody><?php
+            		$lunch_count = $lunch_count + 1; 
+                		if($row["servings"] > 1){
+	                        $servings = $row["servings"];
+	                        echo "<tr>
+	                          <td>" . $row["NDB_No"]. "</td>
+	                          <td>" . $row["Shrt_Desc"]."</td>
+	                          <td>" . $row["meal"]. "</td>
+	                          <td>" . (floatval($row["Energ_Kcal"]) * $servings). "</td>
+	                          <td>" . (floatval($row["Lipid_Tot_g"]) * $servings). "</td>
+	                          <td>" . (floatval($row["Carbohydrt_g"]) * $servings). "</td>
+	                          <td>" . (floatval($row["Protein_g"]) * $servings). "</td>
+	                          <td>" . $row["date"]. "</td> 
+	                          <td>" . $row["servings"]. "</td> 
+	                          <td><input type='submit' class='btn btn-default' name='".$row["NDB_No"]." ' value1='".$row["meal"]."' value ='Delete'/></td>
+	                          </tr>";
+	                          $carb_total += $row["Carbohydrt_g"];
+	                          $fat_total += $row["Lipid_Tot_g"];
+	                          $pro_total += $row["Protein_g"];
+	                    }else { //if servings >1 
+	                    echo "<tr>
+	                          <td>" . $row["NDB_No"]. "</td>
+	                          <td>" . $row["Shrt_Desc"]."</td>
+	                          <td>" . $row["meal"]. "</td>
+	                          <td>" . $row["Energ_Kcal"]. "</td>
+	                          <td>" . $row["Lipid_Tot_g"]. "</td>
+	                          <td>" . $row["Carbohydrt_g"]. "</td>
+	                          <td>" . $row["Protein_g"]. "</td>
+	                          <td>" . $row["date"]. "</td> 
+	                          <td>" . $row["servings"]. "</td> 
+	                          <td><input type='submit' class='btn btn-default' name='".$row["NDB_No"]." ' value1='".$row["meal"]."' value = 'Delete'/></td>
+	                          </tr>";
+	                          $carb_total += $row["Carbohydrt_g"];
+	                          $fat_total += $row["Lipid_Tot_g"];
+	                          $pro_total += $row["Protein_g"];
+	                    }//end else 
+            	}//lunch count != 0 
+
+
+
+
+
+                
+           
+            }//if meal == lunch 
+            else if($row["meal"] == "dinner"){
+            	if($dinner_counnt == 0 ){
+            	?>
+            	</tbody>
+		    	</table> 
+            	<table class="table ">
+		        <thead>
+		          <tr>
+		            <th>Item ID</th>
+		            <th>Description</th>
+		            <th>Meal </th>
+		            <th>Calories </th>
+		            <th>Fat </th>
+		            <th>Carb </th>
+		            <th>Protein </th>
+		            <th>Date </th>
+		            <th>Servings </th>
+		          </tr>
+		        </thead>
+		        <tbody>
+		        <script> console.log("dinner_counnt"); </script>
+		        	<?php 
+		        	echo "<script> console.log(" . $dinner_counnt . "); </script>"; 
+		        	$dinner_counnt = $dinner_counnt + 1; 
+                		if($row["servings"] > 1){
+	                        $servings = $row["servings"];
+	                        echo "<tr>
+	                          <td>" . $row["NDB_No"]. "</td>
+	                          <td>" . $row["Shrt_Desc"]."</td>
+	                          <td>" . $row["meal"]. "</td>
+	                          <td>" . (floatval($row["Energ_Kcal"]) * $servings). "</td>
+	                          <td>" . (floatval($row["Lipid_Tot_g"]) * $servings). "</td>
+	                          <td>" . (floatval($row["Carbohydrt_g"]) * $servings). "</td>
+	                          <td>" . (floatval($row["Protein_g"]) * $servings). "</td>
+	                          <td>" . $row["date"]. "</td> 
+	                          <td>" . $row["servings"]. "</td> 
+	                          <td><input type='submit' class='btn btn-default' name='".$row["NDB_No"]." ' value1='".$row["meal"]."' value ='Delete'/></td>
+	                          </tr>";
+	                          $carb_total += $row["Carbohydrt_g"];
+	                          $fat_total += $row["Lipid_Tot_g"];
+	                          $pro_total += $row["Protein_g"];
+	                    }else { //if servings >1 
+	                    echo "<tr>
+	                          <td>" . $row["NDB_No"]. "</td>
+	                          <td>" . $row["Shrt_Desc"]."</td>
+	                          <td>" . $row["meal"]. "</td>
+	                          <td>" . $row["Energ_Kcal"]. "</td>
+	                          <td>" . $row["Lipid_Tot_g"]. "</td>
+	                          <td>" . $row["Carbohydrt_g"]. "</td>
+	                          <td>" . $row["Protein_g"]. "</td>
+	                          <td>" . $row["date"]. "</td> 
+	                          <td>" . $row["servings"]. "</td> 
+	                          <td><input type='submit' class='btn btn-default' name='".$row["NDB_No"]." ' value1='".$row["meal"]."' value = 'Delete'/></td>
+	                          </tr>";
+	                          $carb_total += $row["Carbohydrt_g"];
+	                          $fat_total += $row["Lipid_Tot_g"];
+	                          $pro_total += $row["Protein_g"];
+	                    }//end else 
+            	}//dinner_counnt == 0 
+            	else {
+            		echo "<script> console.log(" . $dinner_counnt . ") </script>"; 
+            		?><tbody><?php
+            		$dinner_counnt = $dinner_counnt + 1; 
+                		if($row["servings"] > 1){
+	                        $servings = $row["servings"];
+	                        echo "<tr>
+	                          <td>" . $row["NDB_No"]. "</td>
+	                          <td>" . $row["Shrt_Desc"]."</td>
+	                          <td>" . $row["meal"]. "</td>
+	                          <td>" . (floatval($row["Energ_Kcal"]) * $servings). "</td>
+	                          <td>" . (floatval($row["Lipid_Tot_g"]) * $servings). "</td>
+	                          <td>" . (floatval($row["Carbohydrt_g"]) * $servings). "</td>
+	                          <td>" . (floatval($row["Protein_g"]) * $servings). "</td>
+	                          <td>" . $row["date"]. "</td> 
+	                          <td>" . $row["servings"]. "</td> 
+	                          <td><input type='submit' class='btn btn-default' name='".$row["NDB_No"]." ' value1='".$row["meal"]."' value ='Delete'/></td>
+	                          </tr>";
+	                          $carb_total += $row["Carbohydrt_g"];
+	                          $fat_total += $row["Lipid_Tot_g"];
+	                          $pro_total += $row["Protein_g"];
+	                    }else { //if servings >1 
+	                    echo "<tr>
+	                          <td>" . $row["NDB_No"]. "</td>
+	                          <td>" . $row["Shrt_Desc"]."</td>
+	                          <td>" . $row["meal"]. "</td>
+	                          <td>" . $row["Energ_Kcal"]. "</td>
+	                          <td>" . $row["Lipid_Tot_g"]. "</td>
+	                          <td>" . $row["Carbohydrt_g"]. "</td>
+	                          <td>" . $row["Protein_g"]. "</td>
+	                          <td>" . $row["date"]. "</td> 
+	                          <td>" . $row["servings"]. "</td> 
+	                          <td><input type='submit' class='btn btn-default' name='".$row["NDB_No"]." ' value1='".$row["meal"]."' value = 'Delete'/></td>
+	                          </tr>";
+	                          $carb_total += $row["Carbohydrt_g"];
+	                          $fat_total += $row["Lipid_Tot_g"];
+	                          $pro_total += $row["Protein_g"];
+	                    }//end else 
+            	}//dinner count != 0 
+ 
+            }//end if meal == dinner
+            else {
+           	if($other_count == 0 ){
+            	?>
+            	</tbody>
+		    	</table> 
+            	<table class="table ">
+		        <thead>
+		          <tr>
+		            <th>Item ID</th>
+		            <th>Description</th>
+		            <th>Meal </th>
+		            <th>Calories </th>
+		            <th>Fat </th>
+		            <th>Carb </th>
+		            <th>Protein </th>
+		            <th>Date </th>
+		            <th>Servings </th>
+		          </tr>
+		        </thead>
+		        <tbody>
+		        <script> console.log("other_count"); </script>
+		        	<?php 
+		        	echo "<script> console.log(" . $other_count . "); </script>"; 
+		        	$other_count = $other_count + 1; 
+                		if($row["servings"] > 1){
+	                        $servings = $row["servings"];
+	                        echo "<tr>
+	                          <td>" . $row["NDB_No"]. "</td>
+	                          <td>" . $row["Shrt_Desc"]."</td>
+	                          <td>" . $row["meal"]. "</td>
+	                          <td>" . (floatval($row["Energ_Kcal"]) * $servings). "</td>
+	                          <td>" . (floatval($row["Lipid_Tot_g"]) * $servings). "</td>
+	                          <td>" . (floatval($row["Carbohydrt_g"]) * $servings). "</td>
+	                          <td>" . (floatval($row["Protein_g"]) * $servings). "</td>
+	                          <td>" . $row["date"]. "</td> 
+	                          <td>" . $row["servings"]. "</td> 
+	                          <td><input type='submit' class='btn btn-default' name='".$row["NDB_No"]." ' value1='".$row["meal"]."' value ='Delete'/></td>
+	                          </tr>";
+	                          $carb_total += $row["Carbohydrt_g"];
+	                          $fat_total += $row["Lipid_Tot_g"];
+	                          $pro_total += $row["Protein_g"];
+	                    }else { //if servings >1 
+	                    echo "<tr>
+	                          <td>" . $row["NDB_No"]. "</td>
+	                          <td>" . $row["Shrt_Desc"]."</td>
+	                          <td>" . $row["meal"]. "</td>
+	                          <td>" . $row["Energ_Kcal"]. "</td>
+	                          <td>" . $row["Lipid_Tot_g"]. "</td>
+	                          <td>" . $row["Carbohydrt_g"]. "</td>
+	                          <td>" . $row["Protein_g"]. "</td>
+	                          <td>" . $row["date"]. "</td> 
+	                          <td>" . $row["servings"]. "</td> 
+	                          <td><input type='submit' class='btn btn-default' name='".$row["NDB_No"]." ' value1='".$row["meal"]."' value = 'Delete'/></td>
+	                          </tr>";
+	                          $carb_total += $row["Carbohydrt_g"];
+	                          $fat_total += $row["Lipid_Tot_g"];
+	                          $pro_total += $row["Protein_g"];
+	                    }//end else 
+            	}//other_count == 0 
+            	else {
+            		echo "<script> console.log(" . $other_count . ") </script>"; 
+            		?><tbody><?php
+            		$other_count = $other_count + 1; 
+                		if($row["servings"] > 1){
+	                        $servings = $row["servings"];
+	                        echo "<tr>
+	                          <td>" . $row["NDB_No"]. "</td>
+	                          <td>" . $row["Shrt_Desc"]."</td>
+	                          <td>" . $row["meal"]. "</td>
+	                          <td>" . (floatval($row["Energ_Kcal"]) * $servings). "</td>
+	                          <td>" . (floatval($row["Lipid_Tot_g"]) * $servings). "</td>
+	                          <td>" . (floatval($row["Carbohydrt_g"]) * $servings). "</td>
+	                          <td>" . (floatval($row["Protein_g"]) * $servings). "</td>
+	                          <td>" . $row["date"]. "</td> 
+	                          <td>" . $row["servings"]. "</td> 
+	                          <td><input type='submit' class='btn btn-default' name='".$row["NDB_No"]." ' value1='".$row["meal"]."' value ='Delete'/></td>
+	                          </tr>";
+	                          $carb_total += $row["Carbohydrt_g"];
+	                          $fat_total += $row["Lipid_Tot_g"];
+	                          $pro_total += $row["Protein_g"];
+	                    }else { //if servings >1 
+	                    echo "<tr>
+	                          <td>" . $row["NDB_No"]. "</td>
+	                          <td>" . $row["Shrt_Desc"]."</td>
+	                          <td>" . $row["meal"]. "</td>
+	                          <td>" . $row["Energ_Kcal"]. "</td>
+	                          <td>" . $row["Lipid_Tot_g"]. "</td>
+	                          <td>" . $row["Carbohydrt_g"]. "</td>
+	                          <td>" . $row["Protein_g"]. "</td>
+	                          <td>" . $row["date"]. "</td> 
+	                          <td>" . $row["servings"]. "</td> 
+	                          <td><input type='submit' class='btn btn-default' name='".$row["NDB_No"]." ' value1='".$row["meal"]."' value = 'Delete'/></td>
+	                          </tr>";
+	                          $carb_total += $row["Carbohydrt_g"];
+	                          $fat_total += $row["Lipid_Tot_g"];
+	                          $pro_total += $row["Protein_g"];
+	                    }//end else 
+            	}//dinner count != 0 
+
+
+
+
+
+
+
+            }//end else meal == other 
+
+        }
+    }
+
+
+
+
+/*_______________________________________________________________________________________*/
+
+
+
+?> 
+
+
+<!--     <table class="table ">
         <thead>
           <tr>
             <th>Item ID</th>
@@ -159,56 +601,52 @@ function print_table($result){
           </tr>
         </thead>
         <tbody>
-            <?php
-            $carb_total = 0;
-            $fat_total = 0;
-            $pro_total = 0; 
-
+		<?php 
             if ($result->num_rows > 0) {
                 // output data of each row
                 while($row = $result->fetch_assoc()) {
-                    if($row["servings"] > 1){
-                        $servings = $row["servings"];
-                        echo "<tr>
-                          <td>" . $row["NDB_No"]. "</td>
-                          <td>" . $row["Shrt_Desc"]."</td>
-                          <td>" . $row["meal"]. "</td>
-                          <td>" . (floatval($row["Energ_Kcal"]) * $servings). "</td>
-                          <td>" . (floatval($row["Lipid_Tot_g"]) * $servings). "</td>
-                          <td>" . (floatval($row["Carbohydrt_g"]) * $servings). "</td>
-                          <td>" . (floatval($row["Protein_g"]) * $servings). "</td>
-                          <td>" . $row["date"]. "</td> 
-                          <td>" . $row["servings"]. "</td> 
-                          <td><input type='submit' class='btn btn-default' name='".$row["NDB_No"]." ' value1='".$row["meal"]."' value ='Delete'/></td>
-                          </tr>";
-                          $carb_total += $row["Carbohydrt_g"];
-                          $fat_total += $row["Lipid_Tot_g"];
-                          $pro_total += $row["Protein_g"];
-                    }else {
-                    echo "<tr>
-                          <td>" . $row["NDB_No"]. "</td>
-                          <td>" . $row["Shrt_Desc"]."</td>
-                          <td>" . $row["meal"]. "</td>
-                          <td>" . $row["Energ_Kcal"]. "</td>
-                          <td>" . $row["Lipid_Tot_g"]. "</td>
-                          <td>" . $row["Carbohydrt_g"]. "</td>
-                          <td>" . $row["Protein_g"]. "</td>
-                          <td>" . $row["date"]. "</td> 
-                          <td>" . $row["servings"]. "</td> 
-                          <td><input type='submit' class='btn btn-default' name='".$row["NDB_No"]." ' value1='".$row["meal"]."' value = 'Delete'/></td>
-                          </tr>";
-                          $carb_total += $row["Carbohydrt_g"];
-                          $fat_total += $row["Lipid_Tot_g"];
-                          $pro_total += $row["Protein_g"];
-                    }
-                }
+                		if($row["servings"] > 1){
+	                        $servings = $row["servings"];
+	                        echo "<tr>
+	                          <td>" . $row["NDB_No"]. "</td>
+	                          <td>" . $row["Shrt_Desc"]."</td>
+	                          <td>" . $row["meal"]. "</td>
+	                          <td>" . (floatval($row["Energ_Kcal"]) * $servings). "</td>
+	                          <td>" . (floatval($row["Lipid_Tot_g"]) * $servings). "</td>
+	                          <td>" . (floatval($row["Carbohydrt_g"]) * $servings). "</td>
+	                          <td>" . (floatval($row["Protein_g"]) * $servings). "</td>
+	                          <td>" . $row["date"]. "</td> 
+	                          <td>" . $row["servings"]. "</td> 
+	                          <td><input type='submit' class='btn btn-default' name='".$row["NDB_No"]." ' value1='".$row["meal"]."' value ='Delete'/></td>
+	                          </tr>";
+	                          $carb_total += $row["Carbohydrt_g"];
+	                          $fat_total += $row["Lipid_Tot_g"];
+	                          $pro_total += $row["Protein_g"];
+	                    }else { //if servings >1 
+	                    echo "<tr>
+	                          <td>" . $row["NDB_No"]. "</td>
+	                          <td>" . $row["Shrt_Desc"]."</td>
+	                          <td>" . $row["meal"]. "</td>
+	                          <td>" . $row["Energ_Kcal"]. "</td>
+	                          <td>" . $row["Lipid_Tot_g"]. "</td>
+	                          <td>" . $row["Carbohydrt_g"]. "</td>
+	                          <td>" . $row["Protein_g"]. "</td>
+	                          <td>" . $row["date"]. "</td> 
+	                          <td>" . $row["servings"]. "</td> 
+	                          <td><input type='submit' class='btn btn-default' name='".$row["NDB_No"]." ' value1='".$row["meal"]."' value = 'Delete'/></td>
+	                          </tr>";
+	                          $carb_total += $row["Carbohydrt_g"];
+	                          $fat_total += $row["Lipid_Tot_g"];
+	                          $pro_total += $row["Protein_g"];
+	                    }//else                     
+                }//whhile
             } else {
                 echo "0 results";
             }
 
             ?>
         </tbody>
-    </table>
+    </table> -->
     <?php
         echo "Total Carb: ".$carb_total. "<br>";
         echo "Total Pro: ".$pro_total. "<br>";
