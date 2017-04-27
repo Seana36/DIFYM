@@ -15,7 +15,7 @@ if(isset($_SESSION['user'])){
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Creative - Start Bootstrap Theme</title>
+    <title>DIFYM- Login </title>
 
     <!-- Bootstrap Core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -49,7 +49,7 @@ if(isset($_SESSION['user'])){
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand page-scroll" href="#page-top">Start Bootstrap</a>
+                <a class="navbar-brand page-scroll" href="#page-top">DIFYM</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -75,10 +75,12 @@ if(isset($_SESSION['user'])){
                 </div>
                 <div class="form-group">
                 <input type="submit" value="Login" class = "btn btn-default btn-xl sr-button" style="color:black">
+                <a href="RegisterNewUser.html">Create an Account</a>
                 </div>
                 </form>
 
             </div>
+            
         </div>
     </header>
 

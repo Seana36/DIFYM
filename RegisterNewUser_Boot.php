@@ -32,6 +32,97 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+
+    <?php 
+/*    session_start(); */
+$username = $password1 = $password2 = $fName = $lName = $secQ = $secA ="";
+$usernameErr = $pass1err = $pass2err = $fNameerr = $lNameerr = $secQerr = $secAerr = ""; 
+$passed = true; 
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+      if (empty($_POST["username"])) {
+        $usernameErr = "Name is required";
+        $passed = false; 
+      } else {
+        $username = test_input($_POST["username"]);
+      }
+      if (empty($_POST["password1"])) {
+        $pass1err = "Password is required";
+        $passed = false; 
+      } else {
+        $password1 = test_input($_POST["password1"]);
+      }   
+      if (empty($_POST["password2"])) {
+        $pass2err = "Password is required";
+        $passed = false; 
+      } else {
+        $password2 = test_input($_POST["password2"]);
+      } 
+      if (empty($_POST["fName"])) {
+        $fNameerr = "First name is required";
+        $passed = false; 
+      } else {
+        $fName = test_input($_POST["fName"]);
+      }     
+      if (empty($_POST["lName"])) {
+        $lNameerr = "Last Name is required";
+        $passed = false; 
+      } else {
+        $lName = test_input($_POST["lName"]);
+      } 
+      if (empty($_POST["secQ"])) {
+        $secQerr = "Sec Q is required";
+        $passed = false; 
+      } else {
+        $secQ = test_input($_POST["secQ"]);
+      } 
+      if (empty($_POST["secA"])) {
+        $secAerr = "Sec A is required";
+        $passed = false; 
+      } else {
+        $secA = test_input($_POST["secA"]);
+      }  
+/*var_dump($password1);*/
+    if($password1 == $password2 AND isset($password1) AND $password1 !="") {
+        echo "<script> console.log('Passowrd:$password1');</script>";
+        registerUser($username, $password1, $fName, $lName, $secQ, $secA);
+    }else {
+    echo "passwords are not equal ";
+
+    }
+    
+
+}
+
+
+function test_input($data) {
+  $data = trim($data);
+  $data = stripslashes($data);
+  $data = htmlspecialchars($data);
+  return $data;
+}
+
+function registerUser($u, $p, $f, $l, $q, $a){
+    include('dbConnect.php');
+    echo "<script> console.log('Passowrd 1: $p');</script>";
+    $sql = "INSERT INTO User_Info (userName, password, fName, lName, securityQ, securityA) VALUES ('$u', '$p', '$f', '$l', '$q', '$a')  ";
+    if($conn->query($sql) === TRUE){
+        echo "<script>console.log('Successfully added new user')</script>";
+        $sql2 = "SELECT userID from User_Info WHERE userName = $u and password = $p";
+        /*$_SESSION['']*/
+        include_once('login_check_newuser.php'); 
+
+        header('Location: RegisterNewUser_bodyInfo.html');
+    }
+    else {
+        echo "<script>console.log('Error: $conn->error')</script>";
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+
+}
+
+?>
+
 </head>
 
 <body id="page-top">
@@ -81,37 +172,37 @@
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 text-center">
                     <h2 class="section-heading">Enter Your Info</h2>
-                    <hr class="light">
+                    <!-- <hr class="light"> -->
 
-				<form action="RegisterNewUser.php" method="post">
-                    <table class = "table" > 
+                <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
+                    <table class = "table"> 
                     <tr > 
 	                    <td> UserName </td>
-	                    <td><input type="text" name="username"></td>
+	                    <td><input type="text" name="username" value ="<?php echo $username;?>" style="color:black;"><span class="error"  >* <?php echo $usernameErr;?></span></td>
                     </tr>
                     <tr> 
 	                    <td> Password </td>
-	                    <td><input type="text" name="password1"></td>
+	                    <td><input type="text" name="password1"  style="color:black;">*</td>
                     </tr>
                     <tr> 
 	                    <td> Re-Enter Password </td>
-	                    <td><input type="text" name="password2"></td>
+	                    <td><input type="text" name="password2"  style="color:black;">*</td>
                     </tr>
                     <tr> 
 	                    <td> First Name </td>
-	                    <td><input type="text" name="fName"></td>
+	                    <td><input type="text" name="fName" value ="<?php echo $fName;?>" style="color:black;"><span class="error">* <?php echo $fNameerr;?></span></td>
                     </tr>
                     <tr> 
 	                    <td> Last Name </td>
-	                    <td><input type="text" name="lName"></td>
+	                    <td><input type="text" name="lName" value ="<?php echo $lName;?>" style="color:black;"><span class="error">* <?php echo $lNameerr;?></span></td>
                     </tr>
                     <tr> 
 	                    <td> Security Question </td>
-	                    <td><input type="text" name="secQ"></td>
+	                    <td><input type="text" name="secQ" value ="<?php echo $secQ;?>" style="color:black;"><span class="error">* <?php echo $secQerr;?></span></td>
                     </tr>
                     <tr> 
 	                    <td> Security Answer </td>
-	                    <td><input type="text" name="secA"></td>
+	                    <td><input type="text" name="secA" value ="<?php echo $secA;?>" style="color:black;"><span class="error">* <?php echo $secAerr;?></span></td>
                     </tr>
                     <tr> 
                     	<td></td>
