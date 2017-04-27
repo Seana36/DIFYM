@@ -96,7 +96,7 @@
     <section class="bg-primary" id="recommender">
         <div class="container">
             <div class="row">
-                <div class="col-lg-6 col-lg-offset-0 text-center" >
+                <div class="col-lg-4 col-lg-offset-0 text-center" >
                     <h2 class="section-heading">Look up by Macros</h2>
                     <hr class="light">
 
@@ -118,7 +118,7 @@
 					</div>
 					<!-- </form> -->
                 </div>
-                <div class="col-lg-6 col-lg-offset-0 text-center">
+                <div class="col-lg-4 col-lg-offset-0 text-center">
                     <h2 class="section-heading">Look up by Calories</h2>
                     <hr class="light">
                     <!-- <form action="foodRecommender_output_cal.php" method="post"> -->
@@ -131,6 +131,20 @@
 							<!-- </a> -->
 						</div>					
 					<!-- </form> -->
+                </div>
+                <div class="col-lg-4 col-lg-offset-0 text-center">
+                    <h2 class="section-heading">Look up by Name</h2>
+                    <hr class="light">
+                    <!-- <form action="foodRecommender_output_cal.php" method="post"> -->
+                        <div class ="form-group">
+                            Name: <input type="text" id = "name" name="name" style ="color:black">
+                        </div>
+                        <div class ="form-group">
+                        <!-- <a class="page-scroll" href="#Search_Results"> -->
+                            <input type="submit" id = "NameButton" class = "btn btn-default btn-xl sr-button" value="Submit_Name" id="Submit_Name" >
+                            <!-- </a> -->
+                        </div>                  
+                    <!-- </form> -->
                 </div>
             </div>
         </div>
@@ -157,6 +171,13 @@
                         </div>
                    </div>
                     <div id="calDiv" style="display:none;">
+                    <div class = "container"> 
+                         <span>              
+                            
+                        </span>
+                        </div>
+                   </div>
+                    <div id="nameDiv" style="display:none;">
                     <div class = "container"> 
                          <span>              
                             
@@ -342,7 +363,8 @@ function myFunction(){
       data: { 'FATTIES': fat,
               'carbs': carbs,
               'prot' : prot }
-    }).done(function( msg ) {   
+    }).done(function( msg ) {
+    $('#macroDiv span').empty();    
       $("#macroDiv").show();
       $(msg).appendTo('#macroDiv span') ;
     });
@@ -357,9 +379,25 @@ function myFunction_Cal(){
       url: "foodRecommender_output_cal2.php",
       type: "POST",
       data: { 'calories': cal }
-    }).done(function( msg ) {   
+    }).done(function( msg ) {  
+    $('#calDiv span').empty();  
       $("#calDiv").show();
       $(msg).appendTo('#calDiv span') ;
+    });
+}
+document.getElementById("NameButton").onclick = function() {myFunction_Name()};
+function myFunction_Name(){
+    console.log("inside name function"); 
+    var name = document.getElementById('name').value; 
+    console.log(name); 
+    $.ajax({
+      url: "foodRecommender_output_name.php",
+      type: "POST",
+      data: { 'name': name }
+    }).done(function( msg ) {   
+      $('#nameDiv span').empty(); 
+      $("#nameDiv").show();
+      $(msg).appendTo('#nameDiv span') ;
     });
 }
 

@@ -1,18 +1,18 @@
 <?php 
 include('dbConnect.php');
 
-
-if( isset($_POST["calories"]) ){
-	$cal = intval($_POST["calories"]);
+if( isset($_POST["name"]) ){
+	$name = $_POST["name"];
+echo "<script> console.log('Hello $name'); </script> ";
 
 $sql = "SELECT * FROM mytable WHERE 
-		Energ_Kcal BETWEEN $cal AND $cal+20 
-		ORDER BY Energ_Kcal, Protein_g DESC, Carbohydrt_g DESC
+		Shrt_Desc LIKE '%$name%'
+		ORDER BY Energ_Kcal, Protein_g ASC, Carbohydrt_g ASC
 		";
 $result = $conn->query($sql);
 ?> 
 <div class = "container">
-You are searching for Calories between <?php echo $cal ?> and <?php echo $cal+20 ?> grams. <br>  
+You are searching for Name between like <?php echo $name ?> <br>  
 	<table class="table table-striped">
 		<thead>
 	      <tr>
