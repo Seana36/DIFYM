@@ -4,6 +4,9 @@
 <head>
 <?php 
 session_start(); 
+if(isset($_SESSION['user'])){
+    header('Location: homepage_table.php');
+}
 ?>
 
     <meta charset="utf-8">

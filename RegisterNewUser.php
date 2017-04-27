@@ -1,13 +1,27 @@
 <?php
 
 include('dbConnect.php');
-$username  = $_POST['username'];
+/*$username  = $_POST['username'];
 $password1 = $_POST['password1'];
 $password2 = $_POST['password2'];
 $fName     = $_POST['fName'];
 $lName     = $_POST['lName'];
 $secQ	   = $_POST['secQ'];
-$secA	   = $_POST['secA'];
+$secA	   = $_POST['secA'];*/
+	$username  = test_input($_POST['username']);
+	$password1 = test_input($_POST['password1']);
+	$password2 = test_input($_POST['password2']);
+   	$fName = test_input($_POST['fName']);
+   	$lName = test_input($_POST['lName']);
+	$secQ = test_input($_POST['secQ']);
+   	$secA = test_input($_POST['secA']);
+
+function test_input($data) {
+  $data = trim($data);
+  $data = stripslashes($data);
+  $data = htmlspecialchars($data);
+  return $data;
+}
 
 if($password1 == $password2){
  	$sql = "INSERT INTO User_Info (userName, password, fName, lName, securityQ, securityA) 

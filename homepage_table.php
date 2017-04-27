@@ -5,7 +5,9 @@
     <?php 
     include('dbConnect.php');
     session_start();
+    if(isset($_SESSION['user'])){
     echo "<script> console.log('User #: ".$_SESSION['user']."'); </script>"; 
+}
     //include('isLoggedIn.php');
 /*    if(isset($_SESSION['user'])){
         $user = $_SESSION['user'];
