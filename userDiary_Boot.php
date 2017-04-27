@@ -1,13 +1,25 @@
 <?php 
 include('dbConnect.php');
 session_start();
-//include_once('isLoggedIn.php');
 $user = $_SESSION['user'];
 ?> 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+
+<!-- Need these for the drop down menu -->
+   
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+  <!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+
+	<!-- Latest compiled and minified JavaScript -->
+	 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!--^^^^Need these for the drop down menu^^^^^ -->
+
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -31,9 +43,7 @@ $user = $_SESSION['user'];
     <!-- Theme CSS -->
     <link href="css/creative.min.css" rel="stylesheet">
 
-    
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -81,6 +91,20 @@ $user = $_SESSION['user'];
                 <p>Start Bootstrap can help you build better websites using the Bootstrap CSS framework! Just download your template and start going, no strings attached!</p>
                 <a href="#about" class="btn btn-primary btn-xl page-scroll">Find Out More</a>
             </div>
+                            <!-- Display Drop down  -->
+                  <div class="dropdown">
+				    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" >Month
+				    <span class="caret"></span></button>
+				    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" >
+				      <li><option value = "1">January</a></li>
+				      <li><option value = "2">February</a></li>
+				      <li><option value = "3">March</a></li>
+				    </ul>
+				  </div>
+				</div>
+
+
+               <!--  end Drop down  -->
         </div>
     </header>
 
@@ -88,6 +112,10 @@ $user = $_SESSION['user'];
         <div class="container">
             <div class="row">
                 <div class="col-lg-10 text-center">
+
+
+
+
                     
 <?php
 
@@ -253,11 +281,6 @@ $other_count = 0;
 	                          $pro_total += $row["Protein_g"];
 	                    }//end else 
             	}//break count != 0 
-      
-
-           
-/*<!--         	</tbody>
-		    </table> -->*/
 		  
             }
             else if($row["meal"] == "lunch"){
@@ -358,13 +381,7 @@ $other_count = 0;
 	                          $pro_total += $row["Protein_g"];
 	                    }//end else 
             	}//lunch count != 0 
-
-
-
-
-
-                
-           
+          
             }//if meal == lunch 
             else if($row["meal"] == "dinner"){
             	if($dinner_counnt == 0 ){
@@ -577,76 +594,9 @@ $other_count = 0;
     }
 
 
-
-
-/*_______________________________________________________________________________________*/
-
-
-
-?> 
-
-
-<!--     <table class="table ">
-        <thead>
-          <tr>
-            <th>Item ID</th>
-            <th>Description</th>
-            <th>Meal </th>
-            <th>Calories </th>
-            <th>Fat </th>
-            <th>Carb </th>
-            <th>Protein </th>
-            <th>Date </th>
-            <th>Servings </th>
-          </tr>
-        </thead>
-        <tbody>
-		<?php 
-            if ($result->num_rows > 0) {
-                // output data of each row
-                while($row = $result->fetch_assoc()) {
-                		if($row["servings"] > 1){
-	                        $servings = $row["servings"];
-	                        echo "<tr>
-	                          <td>" . $row["NDB_No"]. "</td>
-	                          <td>" . $row["Shrt_Desc"]."</td>
-	                          <td>" . $row["meal"]. "</td>
-	                          <td>" . (floatval($row["Energ_Kcal"]) * $servings). "</td>
-	                          <td>" . (floatval($row["Lipid_Tot_g"]) * $servings). "</td>
-	                          <td>" . (floatval($row["Carbohydrt_g"]) * $servings). "</td>
-	                          <td>" . (floatval($row["Protein_g"]) * $servings). "</td>
-	                          <td>" . $row["date"]. "</td> 
-	                          <td>" . $row["servings"]. "</td> 
-	                          <td><input type='submit' class='btn btn-default' name='".$row["NDB_No"]." ' value1='".$row["meal"]."' value ='Delete'/></td>
-	                          </tr>";
-	                          $carb_total += $row["Carbohydrt_g"];
-	                          $fat_total += $row["Lipid_Tot_g"];
-	                          $pro_total += $row["Protein_g"];
-	                    }else { //if servings >1 
-	                    echo "<tr>
-	                          <td>" . $row["NDB_No"]. "</td>
-	                          <td>" . $row["Shrt_Desc"]."</td>
-	                          <td>" . $row["meal"]. "</td>
-	                          <td>" . $row["Energ_Kcal"]. "</td>
-	                          <td>" . $row["Lipid_Tot_g"]. "</td>
-	                          <td>" . $row["Carbohydrt_g"]. "</td>
-	                          <td>" . $row["Protein_g"]. "</td>
-	                          <td>" . $row["date"]. "</td> 
-	                          <td>" . $row["servings"]. "</td> 
-	                          <td><input type='submit' class='btn btn-default' name='".$row["NDB_No"]." ' value1='".$row["meal"]."' value = 'Delete'/></td>
-	                          </tr>";
-	                          $carb_total += $row["Carbohydrt_g"];
-	                          $fat_total += $row["Lipid_Tot_g"];
-	                          $pro_total += $row["Protein_g"];
-	                    }//else                     
-                }//whhile
-            } else {
-                echo "0 results";
-            }
-
-            ?>
+?>
         </tbody>
-    </table> -->
+    </table> 
     <?php
         echo "Total Carb: ".$carb_total. "<br>";
         echo "Total Pro: ".$pro_total. "<br>";
@@ -697,7 +647,7 @@ $('.button').click(function() {
 
 
 
-
+</tbody></table>
 
                 </div>
             </div>
@@ -723,131 +673,8 @@ $('.button').click(function() {
 
     </section>
 
-    <section class="no-padding" id="portfolio">
-        <div class="container-fluid">
-            <div class="row no-gutter popup-gallery">
-                <div class="col-lg-4 col-sm-6">
-                    <a href="img/portfolio/fullsize/1.jpg" class="portfolio-box">
-                        <img src="img/portfolio/thumbnails/1.jpg" class="img-responsive" alt="">
-                        <div class="portfolio-box-caption">
-                            <div class="portfolio-box-caption-content">
-                                <div class="project-category text-faded">
-                                    Category
-                                </div>
-                                <div class="project-name">
-                                    Project Name
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <a href="img/portfolio/fullsize/2.jpg" class="portfolio-box">
-                        <img src="img/portfolio/thumbnails/2.jpg" class="img-responsive" alt="">
-                        <div class="portfolio-box-caption">
-                            <div class="portfolio-box-caption-content">
-                                <div class="project-category text-faded">
-                                    Category
-                                </div>
-                                <div class="project-name">
-                                    Project Name
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <a href="img/portfolio/fullsize/3.jpg" class="portfolio-box">
-                        <img src="img/portfolio/thumbnails/3.jpg" class="img-responsive" alt="">
-                        <div class="portfolio-box-caption">
-                            <div class="portfolio-box-caption-content">
-                                <div class="project-category text-faded">
-                                    Category
-                                </div>
-                                <div class="project-name">
-                                    Project Name
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <a href="img/portfolio/fullsize/4.jpg" class="portfolio-box">
-                        <img src="img/portfolio/thumbnails/4.jpg" class="img-responsive" alt="">
-                        <div class="portfolio-box-caption">
-                            <div class="portfolio-box-caption-content">
-                                <div class="project-category text-faded">
-                                    Category
-                                </div>
-                                <div class="project-name">
-                                    Project Name
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <a href="img/portfolio/fullsize/5.jpg" class="portfolio-box">
-                        <img src="img/portfolio/thumbnails/5.jpg" class="img-responsive" alt="">
-                        <div class="portfolio-box-caption">
-                            <div class="portfolio-box-caption-content">
-                                <div class="project-category text-faded">
-                                    Category
-                                </div>
-                                <div class="project-name">
-                                    Project Name
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <a href="img/portfolio/fullsize/6.jpg" class="portfolio-box">
-                        <img src="img/portfolio/thumbnails/6.jpg" class="img-responsive" alt="">
-                        <div class="portfolio-box-caption">
-                            <div class="portfolio-box-caption-content">
-                                <div class="project-category text-faded">
-                                    Category
-                                </div>
-                                <div class="project-name">
-                                    Project Name
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <aside class="bg-dark">
-        <div class="container text-center">
-            <div class="call-to-action">
-                <h2>Free Download at Start Bootstrap!</h2>
-                <a href="http://startbootstrap.com/template-overviews/creative/" class="btn btn-default btn-xl sr-button">Download Now!</a>
-            </div>
-        </div>
-    </aside>
 
-    <section id="contact">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-lg-offset-2 text-center">
-                    <h2 class="section-heading">Let's Get In Touch!</h2>
-                    <hr class="primary">
-                    <p>Ready to start your next project with us? That's great! Give us a call or send us an email and we will get back to you as soon as possible!</p>
-                </div>
-                <div class="col-lg-4 col-lg-offset-2 text-center">
-                    <i class="fa fa-phone fa-3x sr-contact"></i>
-                    <p>123-456-6789</p>
-                </div>
-                <div class="col-lg-4 text-center">
-                    <i class="fa fa-envelope-o fa-3x sr-contact"></i>
-                    <p><a href="mailto:your-email@your-domain.com">feedback@startbootstrap.com</a></p>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <!-- jQuery -->
     <script src="vendor/jquery/jquery.min.js"></script>
