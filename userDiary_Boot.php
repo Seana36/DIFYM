@@ -1,7 +1,6 @@
 <?php 
 include('dbConnect.php');
 session_start();
-$user = $_SESSION['user'];
 ?> 
 <!DOCTYPE html>
 <html lang="en">
@@ -63,7 +62,7 @@ $user = $_SESSION['user'];
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand page-scroll" href="#page-top">Start Bootstrap</a>
+                <a class="navbar-brand page-scroll" href="#page-top">DIFYM</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -82,6 +81,11 @@ $user = $_SESSION['user'];
         </div>
         <!-- /.container-fluid -->
     </nav>
+    <?php
+if(isset($_SESSION['user'])){
+$user = $_SESSION['user'];	
+
+    ?>
 
     <header>
         <div class="header-content">
@@ -118,6 +122,7 @@ $user = $_SESSION['user'];
 
                     
 <?php
+
 
 
 $sql = "SELECT  *
@@ -674,6 +679,20 @@ $('.button').click(function() {
     </section>
 
 
+<?php 
+} //end if isset
+else {
+	?>
+	    <header>
+        <div class="header-content">
+            <div class="header-content-inner">
+                <h1 id="homeHeading">You are not logged in, please login before viewing your diary </h1>
+            </div>
+        </div>
+    </header>
+    <?php 
+} 
+?>
 
 
     <!-- jQuery -->
