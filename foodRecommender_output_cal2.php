@@ -1,3 +1,4 @@
+<script src="js/sortable.js"></script>
 <?php 
 include('dbConnect.php');
 
@@ -13,7 +14,7 @@ $result = $conn->query($sql);
 ?> 
 <div class = "container">
 You are searching for Calories between <?php echo $cal ?> and <?php echo $cal+20 ?> grams. <br>  
-	<table class="table table-striped">
+	<table class="table table-striped sortable">
 		<thead>
 	      <tr>
 	        <th>ID</th>

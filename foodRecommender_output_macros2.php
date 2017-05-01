@@ -1,3 +1,4 @@
+<script src="js/sortable.js"></script>
 <?php 
 include('dbConnect.php');
 session_start(); 
@@ -89,7 +90,7 @@ $result = $conn->query($sql);
         You are searching for carbs between: $carbMin and $carbMax. <br>
         You are searching for protein between: $protMin and $protMax. ";
 ?>
-<table class="table table-striped">
+<table class="table table-striped sortable">
 		<thead>
 	      <tr>
 	        <th>ID</th>
