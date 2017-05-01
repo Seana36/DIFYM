@@ -1,5 +1,12 @@
 <html>
 
+<!-- 
+Source for Macro Creation: 
+https://healthyeater.com/how-to-calculate-your-macros 
+
+-->
+    <!-- Load Ajax - Sean -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
 
 <head>
 
@@ -78,26 +85,80 @@ if(isset($_GET["weight"]) ){
 
 	<?php 
 	//Calculating Macros Here
-	echo $TDEE; 
+	echo $TDEE ." TDEE <br>"; 
+	echo $weight . " Weight<br> ";
 	$protein = $weight * 0.825;
-	echo $protein . "<br>";
+	echo $protein . " Protein<br>";
 	$fat = (($TDEE * 0.25) / 9);
-	echo $fat . "<br>";
+	echo $fat . " FAT <br>";
 	$pro_cal = $protein * 4;
-	echo $pro_cal . "<br>";
+	echo $pro_cal . " PROT Cal <br>";
 	$fat_cal = $fat * 9; 
-	echo $fat_cal . "<br>";
+	echo $fat_cal . " Fat Cal<br>";
 	$new_cal = $TDEE - $pro_cal - $fat_cal;
-	echo $new_cal . "<br>";
+	echo $new_cal . " New Cal<br>";
 	$carb = ($new_cal / 4); 
-	echo $carb . "<br>";
-	$total_cal = ($pro_cal * 4 ) + ($fat_cal * 9) + ($carb);
-	echo $total_cal . "<br>";
+	echo $carb . " Carb<br>";
+	$total_cal = ($pro_cal ) + ($fat_cal ) + ($carb);
+	echo $total_cal . " Total Cal <br>";
 
 ?> 
+
+
+<table>
+  <tr>
+    <th>Calories</th>
+    <th>Fat (grams)</th>
+    <th>Carbs (grams)</th>
+    <th>Protein (grams) </th>
+  </tr>
+  <tr>
+    <td><?php echo $total_cal; ?></td>
+    <td><?php echo $fat; ?></td>
+    <td><?php echo $carb; ?></td>
+    <td><?php echo $protein; ?></td>
+  </tr>
+</table>
+<!-- <form action="saveMacrostoDB.php" method="post"> -->
+	<div class ="form-group">
+	Save these macros 
+		<input type="submit" id = "SubmitMacros" class = "page-scroll btn btn-default btn-xl sr-button" value="Save_Macros">
+	</div>
+<!-- </form> -->
+
 <?php 
-} 
+
+
+
+} //if isset()
 ?>
+<script> 
+
+document.getElementById("SubmitMacros").onclick = function() {myFunction()};
+
+function myFunction(){
+	/*console.log("Fat: " + $fat);*/ 
+	var fat = <?php echo json_encode($fat); ?>;
+	var carb = <?php echo json_encode($carb); ?>;
+	var prot = <?php echo json_encode($protein); ?>;
+	var cal = <?php echo json_encode($TDEE); ?>;
+	console.log("Fat2: " + fat); 
+	$.ajax({
+	      url: "saveMacrostoDB.php",
+	      type: "POST",
+	      data: { 'fat': fat,
+	      		  'carb': carb, 
+	      		  'prot': prot,
+	      		  'cal' : cal 
+	            }
+	    }).done(function( msg ) {
+	    	console.log(msg); 
+/*	    $('#macroDiv span').empty();    
+	      $("#macroDiv").show();
+	      $(msg).appendTo('#macroDiv span') ;*/
+	    });
+	}
+</script>
 
 </body>
 </html>

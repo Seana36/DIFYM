@@ -24,7 +24,11 @@ CREATE TABLE User_body(
 	current_weight	INTEGER,
 	goal_weight		INTEGER,
 	goals		VARCHAR(50), 
-	age			INTEGER, 
+	age			INTEGER,
+	goal_cal 	INTEGER DEFAULT 0,
+	goal_fat	INTEGER DEFAULT 0,
+	goal_carb	INTEGER DEFAULT 0,
+	goal_prot	INTEGER	DEFAULT 0,  
 	FOREIGN KEY (userID) REFERENCES User_info(userID)
 );
 
