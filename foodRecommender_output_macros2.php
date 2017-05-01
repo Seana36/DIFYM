@@ -9,13 +9,29 @@ if( isset($_POST['fat_min']) ){
   }else{
     $fatMin = $_POST['fat_min'];
     $fatMax = $_POST['fat_max'];
-
+  }
+  if($_POST['carb_min'] > $_POST['carb_max']){
+    $carbMin = $_POST['carb_max'];
+    $carbMax = $_POST['carb_min'];
+  }else{
+    $carbMin = $_POST['carb_min'];
+    $carbMax = $_POST['carb_max'];
+  }
+  if($_POST['prot_min'] > $_POST['prot_max']){
+    $protMin = $_POST['prot_max'];
+    $protMax = $_POST['prot_min'];
+  }else{
+    $protMin = $_POST['prot_min'];
+    $protMax = $_POST['prot_max'];
   }
   echo "<script> console.log('{FatMin}: ".$fatMin."'); </script>"; 
   echo "<script> console.log('{FatMax}: ".$fatMax."'); </script>"; 
-
-  $carbs = intval($_POST['carbs']); 
-  $prot = 10;
+  echo "<script> console.log('{FatMin}: ".$carbMin."'); </script>"; 
+  echo "<script> console.log('{FatMax}: ".$carbMax."'); </script>"; 
+  echo "<script> console.log('{FatMin}: ".$protMin."'); </script>"; 
+  echo "<script> console.log('{FatMax}: ".$protMax."'); </script>"; 
+/*  $carbs = intval($_POST['carbs']); */
+/*  $prot = 10;*/
   if(isset($_SESSION['user'])){
     $user = $_SESSION['user']; 
     $sql222 = "SELECT Vegetarian FROM user_pref WHERE userID = $user "; 
@@ -44,9 +60,9 @@ if( isset($_POST['fat_min']) ){
 if ($veggie == 'Y'){
   echo "<script> console.log('You are a veggie') </script>"; 
   $sql = "SELECT * FROM mytable WHERE 
-    Protein_g BETWEEN $prot AND $prot+5  AND
+    Protein_g BETWEEN $protMin AND $protMax  AND
     Lipid_Tot_g BETWEEN $fatMin AND $fatMax AND
-    Carbohydrt_g BETWEEN $carbs AND $carbs+5 AND
+    Carbohydrt_g BETWEEN $carbMin AND $carbMax AND
     Shrt_Desc NOT LIKE '%MEAT%' AND
     Shrt_Desc NOT LIKE '%PORK%' AND
     Shrt_Desc NOT LIKE '%BACON%' AND 
@@ -60,9 +76,9 @@ if ($veggie == 'Y'){
 else {
   echo "<script> console.log('You are NOT veggie".$veggie."') </script>";
   $sql = "SELECT * FROM mytable WHERE 
-    Protein_g BETWEEN $prot AND $prot+5  AND
+    Protein_g BETWEEN $protMin AND $protMax  AND
     Lipid_Tot_g BETWEEN $fatMin AND $fatMax AND
-    Carbohydrt_g BETWEEN $carbs AND $carbs+5
+    Carbohydrt_g BETWEEN $carbMin AND $carbMax
     ";
 }
 $result = $conn->query($sql);
@@ -70,8 +86,8 @@ $result = $conn->query($sql);
 <body> 
 <?php 
   echo "You are searching for fat between: $fatMin and $fatMax. <br>
-        You are searching for carbs between: <br>
-        You are searching for protein between: ";
+        You are searching for carbs between: $carbMin and $carbMax. <br>
+        You are searching for protein between: $protMin and $protMax. ";
 ?>
 <table class="table table-striped">
 		<thead>

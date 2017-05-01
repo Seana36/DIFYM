@@ -103,11 +103,6 @@
                     <h2 class="section-heading">Look up by Macros</h2>
                     <hr class="light">
 
-
-
-
-                     <!-- <form action="foodRecommender_output_macros.php" method="post">  -->
-
                     <div class ="form-group">
 						Fat: <br>
                         Min: 
@@ -118,12 +113,29 @@
                          Max: 
                          <input id="fat_max" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="50"/>
 					</div> 
+
 					<div class ="form-group">
-						Carbs: <input type="text" id = "carbs" name="carbs" style ="color:black">
+						Carbs: <br><!--  <input type="text" id = "carbs" name="carbs" style ="color:black"> -->
+                        Min: 
+                         <input id="carb_min" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="0"/>
+                         <br>
+                    </div>
+                    <div class ="form-group">
+                         Max: 
+                         <input id="carb_max" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="50"/>
 					</div>
-					<div class ="form-group">
-						Protein: <input type="text" id = "prot" name="protein" style ="color:black">
-					</div>
+
+                    <div class ="form-group">
+                        Protein: <br><!--  <input type="text" id = "carbs" name="carbs" style ="color:black"> -->
+                        Min: 
+                         <input id="prot_min" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="0"/>
+                         <br>
+                    </div>
+                    <div class ="form-group">
+                         Max: 
+                         <input id="prot_max" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="50"/>
+                    </div>
+
 					<div class ="form-group">
 					<a class="page-scroll" href="#Search_Results">
 						<input type="submit" id = "MacroButton" class = "btn btn-default btn-xl sr-button" value="Submit_Macro" id="Submit_Macro" >
@@ -200,19 +212,6 @@
             </div>
         </div>
     </section>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     <section class="no-padding" id="portfolio">
@@ -370,24 +369,31 @@
 <script> 
 var slider1 = new Slider('#fat_min', {});
 var slider2 = new Slider('#fat_max', {});
+var slider3 = new Slider('#carb_min', {});
+var slider4 = new Slider('#carb_max', {});
+var slider5 = new Slider('#prot_min', {});
+var slider6 = new Slider('#prot_max', {});
 
 document.getElementById("MacroButton").onclick = function() {myFunction()};
 
 function myFunction(){
     console.log("inside click function"); 
     var fat_min = $('#fat_min').val();
-/*    var fat_max = 100; */
     var fat_max = $('#fat_max').val();
-    var carbs = document.getElementById('carbs').value; 
-    var prot  = document.getElementById('prot').value; 
+    var carb_min = $('#carb_min').val();
+    var carb_max = $('#carb_max').val();
+    var prot_min = $('#prot_min').val();
+    var prot_max = $('#prot_max').val();
     console.log("Fat: "+fat_min); 
     $.ajax({
       url: "foodRecommender_output_macros2.php",
       type: "POST",
       data: { 'fat_min': fat_min,
               'fat_max': fat_max,
-              'carbs': carbs,
-              'prot' : prot }
+              'carb_min': carb_min,
+              'carb_max': carb_max,
+              'prot_min' : prot_min,
+              'prot_max' : prot_max }
     }).done(function( msg ) {
     $('#macroDiv span').empty();    
       $("#macroDiv").show();
