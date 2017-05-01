@@ -82,9 +82,9 @@ session_start();
         <!-- /.container-fluid -->
     </nav>
     <?php
-if(isset($_SESSION['user'])){
-$user = $_SESSION['user'];	
-echo "<script> console.log('USER: $user');</script>";
+		if(isset($_SESSION['user'])){
+		$user = $_SESSION['user'];	
+		echo "<script> console.log('USER: $user');</script>";
     ?>
 
     <header>
@@ -116,10 +116,6 @@ echo "<script> console.log('USER: $user');</script>";
         <div class="container">
             <div class="row">
                 <div class="col-lg-10 text-center">
-
-
-
-
                     
 <?php
 
@@ -134,7 +130,6 @@ $result = $conn->query($sql);
 print_table($result);
 $result = $conn->query($sql);
 $total_total = calc_meal_totals($result);
-
 
 ?>
  

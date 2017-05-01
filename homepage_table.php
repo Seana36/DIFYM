@@ -23,6 +23,9 @@
 
     <title>Homepage</title>
 
+
+
+
     <!-- Bootstrap Core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -47,8 +50,10 @@
     <!-- Load Ajax - Sean -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
 
-
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.8.0/bootstrap-slider.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.8.0/bootstrap-slider.min.js"></script>
+    <link href ="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.8.0/css/bootstrap-slider.css" rel="stylesheet">
+    <link href = "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.8.0/css/bootstrap-slider.min.css" rel = "stylesheet">
 
 
 
@@ -100,10 +105,22 @@
                     <h2 class="section-heading">Look up by Macros</h2>
                     <hr class="light">
 
+
+
+
                      <!-- <form action="foodRecommender_output_macros.php" method="post">  -->
 
                     <div class ="form-group">
-						Fat: <input type="text" id = "fat" name="FATTIES" style ="color:black" >
+						Fat: 
+                        <input id="ex2" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="14"/>
+                        <!-- <input id="ex2" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="5" data-slider-value="[250,450]"/>  -->
+<!--                         <div data-role="rangeslider">
+                            <label for="fat-min">Min:</label>
+                            <input type="range" name="fat-min" id="fat-min" value="5" min="0" max="100">
+                            <label for="fat-max">Max:</label>
+                            <input type="range" name="fat-max" id="fat-max" value="10" min="0" max="100">
+                        </div> -->
+                        <!-- <input id="fat" type="range"  min="0" max="100"/>  -->
 					</div>
 					<div class ="form-group">
 						Carbs: <input type="text" id = "carbs" name="carbs" style ="color:black">
@@ -351,12 +368,18 @@
 
 <script> 
 document.getElementById("MacroButton").onclick = function() {myFunction()};
+var slider = new Slider('#ex2', {});
+
+var something = $('#ex2').val();
+console.log("FAT2: "+something);
+
 function myFunction(){
     console.log("inside click function"); 
-    var fat = document.getElementById('fat').value; 
+    var fat = $('#ex2').val();
     var carbs = document.getElementById('carbs').value; 
     var prot  = document.getElementById('prot').value; 
-    console.log(fat); 
+/*    var fat = 0;*/ 
+    console.log("Fat: "+fat); 
     $.ajax({
       url: "foodRecommender_output_macros2.php",
       type: "POST",
