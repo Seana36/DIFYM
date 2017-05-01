@@ -1,12 +1,31 @@
 <?php 
 include('dbConnect.php');
 session_start(); 
-if( isset($_POST['FATTIES']) ){
-  $fat = intval($_POST['FATTIES']);
+if( isset($_POST['fat_min']) ){
+
+  if($_POST['fat_min'] > $_POST['fat_max']){
+    $fatMin = $_POST['fat_max'];
+    $fatMax = $_POST['fat_min'];
+  }else{
+    $fatMin = $_POST['fat_min'];
+    $fatMax = $_POST['fat_max'];
+
+  }
+  echo "<script> console.log('{FatMin}: ".$fatMin."'); </script>"; 
+  echo "<script> console.log('{FatMax}: ".$fatMax."'); </script>"; 
+
   $carbs = intval($_POST['carbs']); 
   $prot = 10;
   if(isset($_SESSION['user'])){
     $user = $_SESSION['user']; 
+    $sql222 = "SELECT Vegetarian FROM user_pref WHERE userID = $user "; 
+    $result2 = $conn->query($sql222);
+    if ($result2->num_rows > 0) {
+      while($row = $result2->fetch_assoc()) {
+        $veggie = $row['Vegetarian']; 
+      }
+    }
+
   } else {
     echo "<script> console.log('You are not logged in') </script>";
   }
@@ -20,20 +39,13 @@ if( isset($_POST['FATTIES']) ){
 #Carbohydrt_g BETWEEN 5 AND 10 AND 
 #Shrt_Desc NOT LIKE '%MILK%'
 
-$sql222 = "SELECT Vegetarian FROM user_pref WHERE userID = $user "; 
-$result2 = $conn->query($sql222);
 
-if ($result2->num_rows > 0) {
-  while($row = $result2->fetch_assoc()) {
-    $veggie = $row['Vegetarian']; 
-  }
-}
 
 if ($veggie == 'Y'){
   echo "<script> console.log('You are a veggie') </script>"; 
   $sql = "SELECT * FROM mytable WHERE 
     Protein_g BETWEEN $prot AND $prot+5  AND
-    Lipid_Tot_g BETWEEN $fat AND $fat+5 AND
+    Lipid_Tot_g BETWEEN $fatMin AND $fatMax AND
     Carbohydrt_g BETWEEN $carbs AND $carbs+5 AND
     Shrt_Desc NOT LIKE '%MEAT%' AND
     Shrt_Desc NOT LIKE '%PORK%' AND
@@ -49,13 +61,18 @@ else {
   echo "<script> console.log('You are NOT veggie".$veggie."') </script>";
   $sql = "SELECT * FROM mytable WHERE 
     Protein_g BETWEEN $prot AND $prot+5  AND
-    Lipid_Tot_g BETWEEN $fat AND $fat+5 AND
+    Lipid_Tot_g BETWEEN $fatMin AND $fatMax AND
     Carbohydrt_g BETWEEN $carbs AND $carbs+5
     ";
 }
 $result = $conn->query($sql);
 ?>
 <body> 
+<?php 
+  echo "You are searching for fat between: $fatMin and $fatMax. <br>
+        You are searching for carbs between: <br>
+        You are searching for protein between: ";
+?>
 <table class="table table-striped">
 		<thead>
 	      <tr>
@@ -125,5 +142,6 @@ else {
   $prot = 100; 
 }
 echo "<script> console.log('{Protein}: ".$prot."'); </script>"; 
+echo "<script> console.log('{Fat}: ".$fat_min."'); </script>"; 
 
 ?>  
