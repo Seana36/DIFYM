@@ -5,7 +5,7 @@ session_start();
 $weight = $_POST['weight'];
 $height = $_POST['height'];
 $age = $_POST['age'];
-$activityLevel = $_POST['activityLevel'] ;
+$activityLevel = intval($_POST['activityLevel']) ;
 /*if( isset($_POST['activityLevel'] )) {
 	$activityLevel = intval($_POST['activityLevel']);	
 }else {

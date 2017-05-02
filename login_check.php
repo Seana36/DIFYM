@@ -19,7 +19,7 @@ if($entry > 0)
 	$_SESSION["name"] = $entry[0] . " " . $entry[1];
 	$_SESSION["user"] = $entry[2];
 	//echo "<script> console.log('$_SESSION['user']'); </script>";
-	header('Location:homepage_table.php');
+	header('Location:homepage.php');
 }
 
 else
