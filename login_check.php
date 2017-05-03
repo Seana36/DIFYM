@@ -4,13 +4,24 @@ session_start();
 include_once('dbConnect.php');
 
 
-$userName = $_POST['username'];
-$password = $_POST['password']; 	
+$userName = test_input($_POST['username']);
+$password = test_input($_POST['password']); 	
 
 $sql = "SELECT fName, lName, userID FROM User_info WHERE userID = (SELECT userID FROM User_info WHERE username = '$userName' AND password ='$password')"; 
+
+function test_input($data) {
+  $data = trim($data);
+  $data = stripslashes($data);
+  $data = htmlspecialchars($data);
+  return $data;
+}
+
 $result = $conn->query($sql);
 if (!$result){
-	die("query failed" . $conn->error);
+	header('Location:login.php');
+	echo"<p style = 'color:red'>Incorrect login.</p>";
+	echo "<script> alert('Login failed please try again');"; 
+	/*die("query failed" . $conn->error);*/
 }
 $entry = $result->fetch_row();
 if($entry > 0)

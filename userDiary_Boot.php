@@ -152,56 +152,104 @@ $('.button').click(function() {
     location.reload();
 });
 </script>
+                </div>
+            </div>
+        </div>
+    </section>
+<!-- Displaying Totals -->
+    <section id="services">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 ">
+                <table class = "table"> 
+                <tr> 
+                    <th> Meal</th>
+                    <th> Calories </th>
+                    <th> Fat </th>
+                    <th> Carbs </th>
+                    <th> Protein </th>
+                </tr>
+                <?php
+                    for($row = 0; $row < 5; $row++){
+                       echo "<tr>";
+                        for($col = 0; $col < 5; $col++){
+                            echo "<td> ".$total_total[$row][$col]."</td> ";
+                        }
+                    echo "</tr>";
+                    }
+                ?>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- </tbody></table> -->
-
+                </table>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="services">
+<!--     Displaying COmpared to totals-->    
+    <section id="services2" class="bg-primary">
         <div class="container">
             <div class="row">
-                <div class="col-lg-12 text-center">
+                <div class="col-lg-12 ">
+
                 <?php
-                    for($row = 0; $row < 4; $row++){
-                       /* echo "<ul>";*/
-                        for($col = 0; $col < 4; $col++){
-                            echo " ".$total_total[$row][$col]." ";
-                        }
-                        echo "<br>";
-                   /* echo "</ul>";*/
+                $totalCal =  $total_total[4][1];
+                $totalFat =  $total_total[4][2];
+                $totalCarb = $total_total[4][3];
+                $totalProt = $total_total[4][4];
+
+                $sql11 = "SELECT goal_cal, goal_fat, goal_carb, goal_prot FROM `user_body` WHERE userID = $user";
+                $result11 = $conn->query($sql11);
+                if ($result11->num_rows > 0) {
+                    while($row = $result11->fetch_assoc()) {
+                        $goalCal = $row['goal_cal'];
+                        $goalFat = $row['goal_fat'];
+                        $goalCarb= $row['goal_carb'];
+                        $goalProt= $row['goal_prot'] ;  
                     }
+                }
+                else {
+                    echo "something else";
+                }
+                $remainingCal = $goalCal - $totalCal;
+                $remainingFat = $goalFat - $totalFat;
+                $remainingCarb = $goalCarb - $totalCarb;
+                $remainingProt = $goalProt - $totalProt;
                 ?>
+                <table class = "table">
+                <tr> 
+                    <td>  </td>
+                    <td> Calories </td>
+                    <td> Fat </td>
+                    <td> Carb </td>
+                    <td> Protein </td>
+                </tr>
+                <tr> 
+                    <td> Eaten today </td>
+                    <td> <?php echo $totalCal ?> </td>
+                    <td> <?php echo $totalFat ?> </td>
+                    <td> <?php echo $totalCarb ?> </td>
+                    <td> <?php echo $totalProt ?> </td>
+                </tr>
+                <tr> 
+                    <td> Daily Goal </td>
+                    <td> <?php echo $goalCal ?> </td>
+                    <td> <?php echo $goalFat ?></td>
+                    <td> <?php echo $goalCarb ?> </td>
+                    <td> <?php echo $goalProt ?> </td>
+                </tr>
+                <tr> 
+                    <td> Left </td>
+                    <td> <?php echo $remainingCal ?> </td>
+                    <td> <?php echo $remainingFat ?></td>
+                    <td> <?php echo $remainingCarb ?></td>
+                    <td> <?php echo $remainingProt ?> </td>
+                </tr>
+               
+                </table> 
+
                 </div>
             </div>
         </div>
-
     </section>
 
 

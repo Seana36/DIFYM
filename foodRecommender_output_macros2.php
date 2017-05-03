@@ -158,7 +158,7 @@ else {
   $carbs = 100;
   $prot = 100; 
 }
-echo "<script> console.log('{Protein}: ".$prot."'); </script>"; 
-echo "<script> console.log('{Fat}: ".$fat_min."'); </script>"; 
+/*echo "<script> console.log('{Protein}: ".$prot_min."'); </script>"; 
+echo "<script> console.log('{Fat}: ".$fat_min."'); </script>"; */
 
 ?>  
