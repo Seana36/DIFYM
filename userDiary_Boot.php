@@ -50,6 +50,8 @@ session_start();
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <!-- Load Ajax - Sean -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
 
 </head>
 
@@ -135,23 +137,6 @@ $total_total = calc_meal_totals($result);
  
 </div>
 
-
-<script> 
-$('.button').click(function() {
-    //var clickBtnValue = $(this).val();
-    var id = $(this).attr('name');
-    var meal = $(this).attr('value1');
-     $.ajax({
-      type: "POST",
-      url: "removeFrom_UserDiary.php",
-      data: { 'foodID':id ,
-              'meal' : meal}
-    }).done(function( msg ) {
-      alert( "Data Saved: " + msg );
-    });    
-    location.reload();
-});
-</script>
                 </div>
             </div>
         </div>
@@ -161,6 +146,7 @@ $('.button').click(function() {
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 ">
+                <h2> Macro Breakdown by Meal </h2>
                 <table class = "table"> 
                 <tr> 
                     <th> Meal</th>
@@ -190,6 +176,7 @@ $('.button').click(function() {
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 ">
+                <h2> How many are left?</h2>
 
                 <?php
                 $totalCal =  $total_total[4][1];
@@ -268,6 +255,30 @@ else {
 } 
 ?>
 
+<script> 
+            console.log("here1");
+            document.getElementById("DeleteButton").onclick = function() {myFunction_Del()};
+            function myFunction_Del(){
+        /*  $('.button').click(function() {*/
+                console.log("delete click");
+                //var clickBtnValue = $(this).val();
+                var id = $(this).attr('name');
+                var meal = $(this).attr('value1');
+                 $.ajax({
+                  type: "POST",
+                  url: "removeFrom_UserDiary.php",
+                  data: { 'foodID':id ,
+                          'meal' : meal}
+                }).done(function( msg ) {
+                  alert( "Data Saved: " + msg );
+                });    
+                location.reload();
+            }
+        /*  });*/
+            </script>
+
+
+
 
     <!-- jQuery -->
     <script src="vendor/jquery/jquery.min.js"></script>
@@ -282,6 +293,7 @@ else {
 
     <!-- Theme JavaScript -->
     <script src="js/creative.min.js"></script>
+
 
 </body>
 

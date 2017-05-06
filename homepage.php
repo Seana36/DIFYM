@@ -138,7 +138,7 @@
 
 					<div class ="form-group">
 					<a class="page-scroll" href="#Search_Results">
-						<input type="submit" id = "MacroButton" class = "btn btn-default btn-xl sr-button" value="Submit_Macro" id="Submit_Macro" >
+						<input type="submit" id = "MacroButton" class = "btn btn-default btn-xl sr-button" value="Submit_Macro"  >
 					</a>
 					</div>
 					<!-- </form> -->
@@ -148,14 +148,17 @@
                     <hr class="light">
                     <!-- <form action="foodRecommender_output_cal.php" method="post"> -->
 	                    <div class ="form-group">
-							Calories: <input type="text" id = "calories" name="calories" style ="color:black">
-						</div>
+							Calories: <br>
+                        Min: 
+                         <input id="cal_min" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="500" data-slider-step="5" data-slider-value="0"/>
+                        </div>
+                        <div class ="form-group">
+                        Max: 
+                             <input id="cal_max" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="500" data-slider-step="5" data-slider-value="250"/>
+                        </div> 
 						<div class ="form-group">
-						<!-- <a class="page-scroll" href="#Search_Results"> -->
 							<input type="submit" id = "CalorieButton" class = "btn btn-default btn-xl sr-button" value="Submit_Cal" id="Submit_Cal" >
-							<!-- </a> -->
 						</div>					
-					<!-- </form> -->
                 </div>
                 <div class="col-lg-4 col-lg-offset-0 text-center">
                     <h2 class="section-heading">Look up by Name</h2>
@@ -373,6 +376,8 @@ var slider3 = new Slider('#carb_min', {});
 var slider4 = new Slider('#carb_max', {});
 var slider5 = new Slider('#prot_min', {});
 var slider6 = new Slider('#prot_max', {});
+var slider7 = new Slider('#cal_min', {});
+var slider8 = new Slider('#cal_max', {});
 
 document.getElementById("MacroButton").onclick = function() {myFunction()};
 
@@ -403,13 +408,16 @@ function myFunction(){
 
 document.getElementById("CalorieButton").onclick = function() {myFunction_Cal()};
 function myFunction_Cal(){
-    console.log("inside click function"); 
+/*    console.log("inside click function"); 
     var cal = document.getElementById('calories').value; 
-    console.log(cal); 
+    console.log(cal); */
+    var cal_min = $('#cal_min').val();
+    var cal_max = $('#cal_max').val();
     $.ajax({
       url: "foodRecommender_output_cal2.php",
       type: "POST",
-      data: { 'calories': cal }
+      data: { 'cal_min': cal_min,
+              'cal_max': cal_max }
     }).done(function( msg ) {  
     $('#calDiv span').empty();  
       $("#calDiv").show();

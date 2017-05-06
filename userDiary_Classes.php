@@ -102,12 +102,12 @@
 				            <th>Protein </th>
 				            <th>Date </th>
 				            <th>Servings </th>
+				            <th> </th>
 				          </tr>
 				        </thead>
 				        <tbody>
 				        	<?php 
-/*				        	echo "<script> console.log(" . $break_count . ") </script>"; 
-*/				        	$break_count = $break_count + 1; 
+				        	$break_count = $break_count + 1; 
 		                		if($row["servings"] > 1){
 			                        $servings = $row["servings"];
 			                        echo "<tr>
@@ -120,7 +120,7 @@
 			                          <td>" . (floatval($row["Protein_g"]) * $servings). "</td>
 			                          <td>" . $row["date"]. "</td> 
 			                          <td>" . $row["servings"]. "</td> 
-			                          <td><input type='submit' class='btn btn-default' name='".$row["NDB_No"]." ' value1='".$row["meal"]."' value ='Delete'/></td>
+			                          <td><input type='submit' id='DeleteButton' class='btn btn-default' name='".$row["NDB_No"]." ' value1='".$row["meal"]."' value ='Delete'/></td>
 			                          </tr>";
 			                          $carb_total += $row["Carbohydrt_g"];
 			                          $fat_total += $row["Lipid_Tot_g"];
@@ -136,7 +136,7 @@
 			                          <td>" . $row["Protein_g"]. "</td>
 			                          <td>" . $row["date"]. "</td> 
 			                          <td>" . $row["servings"]. "</td> 
-			                          <td><input type='submit' class='btn btn-default' name='".$row["NDB_No"]." ' value1='".$row["meal"]."' value = 'Delete'/></td>
+			                          <td><input type='submit' id='DeleteButton' class='btn btn-default' name='".$row["NDB_No"]." ' value1='".$row["meal"]."' value = 'Delete'/></td>
 			                          </tr>";
 			                          $carb_total += $row["Carbohydrt_g"];
 			                          $fat_total += $row["Lipid_Tot_g"];
@@ -144,8 +144,7 @@
 		                    }//end else 
 	            	}//break_count == 0 
 	            	else {
-/*	            		echo "<script> console.log(" . $break_count . ") </script>"; 
-*/	            		?><tbody><?php
+	            		?><tbody><?php
 	            		$break_count = $break_count + 1; 
 	                		if($row["servings"] > 1){
 		                        $servings = $row["servings"];
@@ -159,7 +158,7 @@
 		                          <td>" . (floatval($row["Protein_g"]) * $servings). "</td>
 		                          <td>" . $row["date"]. "</td> 
 		                          <td>" . $row["servings"]. "</td> 
-		                          <td><input type='submit' class='btn btn-default' name='".$row["NDB_No"]." ' value1='".$row["meal"]."' value ='Delete'/></td>
+		                          <td><input type='submit' id='DeleteButton' class='btn btn-default' name='".$row["NDB_No"]." ' value1='".$row["meal"]."' value ='Delete'/></td>
 		                          </tr>";
 		                          $carb_total += $row["Carbohydrt_g"];
 		                          $fat_total += $row["Lipid_Tot_g"];
@@ -175,7 +174,7 @@
 		                          <td>" . $row["Protein_g"]. "</td>
 		                          <td>" . $row["date"]. "</td> 
 		                          <td>" . $row["servings"]. "</td> 
-		                          <td><input type='submit' class='btn btn-default' name='".$row["NDB_No"]." ' value1='".$row["meal"]."' value = 'Delete'/></td>
+		                          <td><input type='submit' id='DeleteButton' class='btn btn-default' name='".$row["NDB_No"]." ' value1='".$row["meal"]."' value = 'Delete'/></td>
 		                          </tr>";
 		                          $carb_total += $row["Carbohydrt_g"];
 		                          $fat_total += $row["Lipid_Tot_g"];
@@ -203,8 +202,7 @@
 				        </thead>
 				        <tbody>
 				        	<?php 
-/*				        	echo "<script> console.log(" . $lunch_count . ") </script>"; 
-*/				        	$lunch_count = $lunch_count + 1; 
+				        	$lunch_count = $lunch_count + 1; 
 		                		if($row["servings"] > 1){
 			                        $servings = $row["servings"];
 			                        echo "<tr>
@@ -217,7 +215,7 @@
 			                          <td>" . (floatval($row["Protein_g"]) * $servings). "</td>
 			                          <td>" . $row["date"]. "</td> 
 			                          <td>" . $row["servings"]. "</td> 
-			                          <td><input type='submit' class='btn btn-default' name='".$row["NDB_No"]." ' value1='".$row["meal"]."' value ='Delete'/></td>
+			                          <td><input type='submit' id='DeleteButton' class='btn btn-default' name='".$row["NDB_No"]." ' value1='".$row["meal"]."' value ='Delete'/></td>
 			                          </tr>";
 			                          $carb_total += $row["Carbohydrt_g"];
 			                          $fat_total += $row["Lipid_Tot_g"];
@@ -233,7 +231,7 @@
 			                          <td>" . $row["Protein_g"]. "</td>
 			                          <td>" . $row["date"]. "</td> 
 			                          <td>" . $row["servings"]. "</td> 
-			                          <td><input type='submit' class='btn btn-default' name='".$row["NDB_No"]." ' value1='".$row["meal"]."' value = 'Delete'/></td>
+			                          <td><input type='submit' id='DeleteButton' class='btn btn-default' name='".$row["NDB_No"]." ' value1='".$row["meal"]."' value = 'Delete'/></td>
 			                          </tr>";
 			                          $carb_total += $row["Carbohydrt_g"];
 			                          $fat_total += $row["Lipid_Tot_g"];
@@ -241,8 +239,7 @@
 		                    }//end else 
 	            	}//break_count == 0 
 	            	else {
-/*	            		echo "<script> console.log(" . $lunch_count . ") </script>"; 
-*/	            		?><tbody><?php
+	            		?><tbody><?php
 	            		$lunch_count = $lunch_count + 1; 
 	                		if($row["servings"] > 1){
 		                        $servings = $row["servings"];
@@ -256,7 +253,7 @@
 		                          <td>" . (floatval($row["Protein_g"]) * $servings). "</td>
 		                          <td>" . $row["date"]. "</td> 
 		                          <td>" . $row["servings"]. "</td> 
-		                          <td><input type='submit' class='btn btn-default' name='".$row["NDB_No"]." ' value1='".$row["meal"]."' value ='Delete'/></td>
+		                          <td><input type='submit' id='DeleteButton' class='btn btn-default' name='".$row["NDB_No"]." ' value1='".$row["meal"]."' value ='Delete'/></td>
 		                          </tr>";
 		                          $carb_total += $row["Carbohydrt_g"];
 		                          $fat_total += $row["Lipid_Tot_g"];
@@ -272,7 +269,7 @@
 		                          <td>" . $row["Protein_g"]. "</td>
 		                          <td>" . $row["date"]. "</td> 
 		                          <td>" . $row["servings"]. "</td> 
-		                          <td><input type='submit' class='btn btn-default' name='".$row["NDB_No"]." ' value1='".$row["meal"]."' value = 'Delete'/></td>
+		                          <td><input type='submit' id='DeleteButton' class='btn btn-default' name='".$row["NDB_No"]." ' value1='".$row["meal"]."' value = 'Delete'/></td>
 		                          </tr>";
 		                          $carb_total += $row["Carbohydrt_g"];
 		                          $fat_total += $row["Lipid_Tot_g"];
@@ -300,8 +297,7 @@
 				        </thead>
 				        <tbody>
 				        	<?php 
-/*				        	echo "<script> console.log(" . $dinner_count . ") </script>"; 
-*/				        	$dinner_count = $dinner_count + 1; 
+				        	$dinner_count = $dinner_count + 1; 
 		                		if($row["servings"] > 1){
 			                        $servings = $row["servings"];
 			                        echo "<tr>
@@ -314,7 +310,7 @@
 			                          <td>" . (floatval($row["Protein_g"]) * $servings). "</td>
 			                          <td>" . $row["date"]. "</td> 
 			                          <td>" . $row["servings"]. "</td> 
-			                          <td><input type='submit' class='btn btn-default' name='".$row["NDB_No"]." ' value1='".$row["meal"]."' value ='Delete'/></td>
+			                          <td><input type='submit' id='DeleteButton' class='btn btn-default' name='".$row["NDB_No"]." ' value1='".$row["meal"]."' value ='Delete'/></td>
 			                          </tr>";
 			                          $carb_total += $row["Carbohydrt_g"];
 			                          $fat_total += $row["Lipid_Tot_g"];
@@ -330,7 +326,7 @@
 			                          <td>" . $row["Protein_g"]. "</td>
 			                          <td>" . $row["date"]. "</td> 
 			                          <td>" . $row["servings"]. "</td> 
-			                          <td><input type='submit' class='btn btn-default' name='".$row["NDB_No"]." ' value1='".$row["meal"]."' value = 'Delete'/></td>
+			                          <td><input type='submit'  id='DeleteButton' class='btn btn-default' name='".$row["NDB_No"]." ' value1='".$row["meal"]."' value = 'Delete'/></td>
 			                          </tr>";
 			                          $carb_total += $row["Carbohydrt_g"];
 			                          $fat_total += $row["Lipid_Tot_g"];
@@ -338,8 +334,7 @@
 		                    }//end else 
 	            	}//dinner_count == 0 
 	            	else {
-/*	            		echo "<script> console.log(Dinner: " . $dinner_count . ") </script>"; 
-*/	            		?><tbody><?php
+	            		?><tbody><?php
 	            		$dinner_count = $dinner_count + 1; 
 	                		if($row["servings"] > 1){
 		                        $servings = $row["servings"];
@@ -353,7 +348,7 @@
 		                          <td>" . (floatval($row["Protein_g"]) * $servings). "</td>
 		                          <td>" . $row["date"]. "</td> 
 		                          <td>" . $row["servings"]. "</td> 
-		                          <td><input type='submit' class='btn btn-default' name='".$row["NDB_No"]." ' value1='".$row["meal"]."' value ='Delete'/></td>
+		                          <td><input type='submit' id='DeleteButton' class='btn btn-default' name='".$row["NDB_No"]." ' value1='".$row["meal"]."' value ='Delete'/></td>
 		                          </tr>";
 		                          $carb_total += $row["Carbohydrt_g"];
 		                          $fat_total += $row["Lipid_Tot_g"];
@@ -369,7 +364,7 @@
 		                          <td>" . $row["Protein_g"]. "</td>
 		                          <td>" . $row["date"]. "</td> 
 		                          <td>" . $row["servings"]. "</td> 
-		                          <td><input type='submit' class='btn btn-default' name='".$row["NDB_No"]." ' value1='".$row["meal"]."' value = 'Delete'/></td>
+		                          <td><input type='submit' id='DeleteButton' class='btn btn-default' name='".$row["NDB_No"]." ' value1='".$row["meal"]."' value = 'Delete'/></td>
 		                          </tr>";
 		                          $carb_total += $row["Carbohydrt_g"];
 		                          $fat_total += $row["Lipid_Tot_g"];
@@ -398,8 +393,7 @@
 				        </thead>
 				        <tbody>
 				        	<?php 
-/*				        	echo "<script> console.log(Snack: " . $snack_count . ") </script>"; 
-*/				        	$snack_count = $snack_count + 1; 
+				        	$snack_count = $snack_count + 1; 
 		                		if($row["servings"] > 1){
 			                        $servings = $row["servings"];
 			                        echo "<tr>
@@ -412,7 +406,7 @@
 			                          <td>" . (floatval($row["Protein_g"]) * $servings). "</td>
 			                          <td>" . $row["date"]. "</td> 
 			                          <td>" . $row["servings"]. "</td> 
-			                          <td><input type='submit' class='btn btn-default' name='".$row["NDB_No"]." ' value1='".$row["meal"]."' value ='Delete'/></td>
+			                          <td><input type='submit' id='DeleteButton' class='btn btn-default' name='".$row["NDB_No"]." ' value1='".$row["meal"]."' value ='Delete'/></td>
 			                          </tr>";
 			                          $carb_total += $row["Carbohydrt_g"];
 			                          $fat_total += $row["Lipid_Tot_g"];
@@ -428,7 +422,7 @@
 			                          <td>" . $row["Protein_g"]. "</td>
 			                          <td>" . $row["date"]. "</td> 
 			                          <td>" . $row["servings"]. "</td> 
-			                          <td><input type='submit' class='btn btn-default' name='".$row["NDB_No"]." ' value1='".$row["meal"]."' value = 'Delete'/></td>
+			                          <td><input type='submit' id='DeleteButton' class='btn btn-default' name='".$row["NDB_No"]." ' value1='".$row["meal"]."' value = 'Delete'/></td>
 			                          </tr>";
 			                          $carb_total += $row["Carbohydrt_g"];
 			                          $fat_total += $row["Lipid_Tot_g"];
@@ -436,8 +430,7 @@
 		                    }//end else 
 	            	}//dinner_count == 0 
 	            	else {
-/*	            		echo "<script> console.log(Snack: " . $snack_count . ") </script>"; 
-*/	            		?><tbody><?php
+	            		?><tbody><?php
 	            		$snack_count = $snack_count + 1; 
 	                		if($row["servings"] > 1){
 		                        $servings = $row["servings"];
@@ -451,7 +444,7 @@
 		                          <td>" . (floatval($row["Protein_g"]) * $servings). "</td>
 		                          <td>" . $row["date"]. "</td> 
 		                          <td>" . $row["servings"]. "</td> 
-		                          <td><input type='submit' class='btn btn-default' name='".$row["NDB_No"]." ' value1='".$row["meal"]."' value ='Delete'/></td>
+		                          <td><input type='submit' id='DeleteButton' class='btn btn-default' name='".$row["NDB_No"]." ' value1='".$row["meal"]."' value ='Delete'/></td>
 		                          </tr>";
 		                          $carb_total += $row["Carbohydrt_g"];
 		                          $fat_total += $row["Lipid_Tot_g"];
@@ -467,7 +460,7 @@
 		                          <td>" . $row["Protein_g"]. "</td>
 		                          <td>" . $row["date"]. "</td> 
 		                          <td>" . $row["servings"]. "</td> 
-		                          <td><input type='submit' class='btn btn-default' name='".$row["NDB_No"]." ' value1='".$row["meal"]."' value = 'Delete'/></td>
+		                          <td><input type='submit' id='DeleteButton' class='btn btn-default' name='".$row["NDB_No"]." ' value1='".$row["meal"]."' value = 'Delete'/></td>
 		                          </tr>";
 		                          $carb_total += $row["Carbohydrt_g"];
 		                          $fat_total += $row["Lipid_Tot_g"];
@@ -482,6 +475,12 @@
 	            }//end else meal == other 
 
 	        }//while loop
+?>
+
+
+
+	     
+<?php 
     }//if statement
 
 
@@ -492,6 +491,33 @@
         echo "Total Carb: ".$carb_total. "<br>";
         echo "Total Pro: ".$pro_total. "<br>";
         echo "Total Fat: ".$fat_total. "<br>";
+
+
+    ?>
+
+<script> 
+			console.log("here2");
+/*            document.getElementById("DeleteButton").onclick = function() {myFunction_Del2()};
+            function myFunction_Del2(){*/
+          $('.btn').click(function() {
+                console.log("delete click2");
+                //var clickBtnValue = $(this).val();
+                var id = $(this).attr('name');
+                var meal = $(this).attr('value1');
+                 $.ajax({
+                  type: "POST",
+                  url: "removeFrom_UserDiary.php",
+                  data: { 'foodID':id ,
+                          'meal' : meal}
+                }).done(function( msg ) {
+                  alert( "Data Saved: " + msg );
+                });    
+                location.reload();
+   /*         }*/
+          });
+            </script>
+
+    <?php    
     }//end function print_table()
     ?>
 
