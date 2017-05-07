@@ -20,7 +20,7 @@ $sql = "SELECT * FROM mytable WHERE
 		";
 $result = $conn->query($sql);
 ?> 
-<div class = "container">
+<!-- <div class = "container"> -->
 You are searching for Calories between <?php echo $cal_min ?> and <?php echo $cal_max ?> grams. <br>  
 	<table class="table table-striped sortable">
 		<thead>
@@ -62,7 +62,7 @@ You are searching for Calories between <?php echo $cal_min ?> and <?php echo $ca
 			?>
 		</tbody>
 	</table>
-</div>
+<!-- </div> -->
 <script> 
 /*document.getElementById("clickbutton").onclick = function() {myFunction()};
 */ $('.button').click(function() {

@@ -189,7 +189,7 @@
         </div>
         <div class="container">
             <div class="row">
-                <div class="col-lg-8 col-lg-offset-0 text-center">  
+                <div class="col-lg-8 col-lg-offset-0 text-center col-xs-12">  
                 <!-- http://stackoverflow.com/questions/12032664/load-a-html-page-within-another-html-page   -->       
                     <div id="macroDiv" style="display:none" >
                          <div class = "container"> 

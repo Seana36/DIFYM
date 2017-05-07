@@ -6,7 +6,8 @@ include_once('isLoggedIn.php');
 $user = $_SESSION['user']; 
 $id = intval($_POST['ID']);
 $meal = $_POST['meal'];
-$date = date("y-m-d");
+$date = date("Y-m-d");
+echo "<script> console.log('$date') </script>";
 /*2017-10-05*/
 
 $sql1 = "SELECT * FROM userdiary u, mytable t WHERE userID = $user AND meal = '$meal' and u.NDB_NO = $id AND date = '$date' AND u.NDB_NO = t.NDB_NO "; 

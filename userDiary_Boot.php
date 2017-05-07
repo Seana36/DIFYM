@@ -92,13 +92,12 @@ session_start();
     <header>
         <div class="header-content">
             <div class="header-content-inner">
-                <h1 id="homeHeading">Your Favorite Source of Free Bootstrap Themes</h1>
+                <h1 id="homeHeading"><?php echo $_SESSION['name'] ?>'s User Diary</h1>
                 <hr>
-                <p>Start Bootstrap can help you build better websites using the Bootstrap CSS framework! Just download your template and start going, no strings attached!</p>
-                <a href="#about" class="btn btn-primary btn-xl page-scroll">Find Out More</a>
+                <a href="#about" class="btn-primary btn-xl page-scroll" id='diaryButton'>Go to your Diary</a>
             </div>
                             <!-- Display Drop down  -->
-                  <div class="dropdown">
+<!--                   <div class="dropdown">
 				    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" >Month
 				    <span class="caret"></span></button>
 				    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" >
@@ -107,7 +106,7 @@ session_start();
 				      <li><option value = "3">March</a></li>
 				    </ul>
 				  </div>
-				</div>
+				</div> -->
 
 
                <!--  end Drop down  -->
@@ -122,10 +121,12 @@ session_start();
 <?php
 
 include_once('userDiary_Classes.php'); 
-
+$date  = date("Y-m-d");
+/*$date = "2017-05-07";*/
+echo "<script> console.log('Date is $date'); </script>";
 $sql = "SELECT  *
         FROM userdiary u,mytable t 
-        WHERE u.NDB_No = t.NDB_No AND u.userID = $user
+        WHERE u.NDB_No = t.NDB_No AND u.userID = $user AND u.date = '$date'
         ORDER BY meal ASC
         ";
 $result = $conn->query($sql);

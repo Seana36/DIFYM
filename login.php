@@ -5,7 +5,7 @@
 <?php 
 session_start(); 
 if(isset($_SESSION['user'])){
-    header('Location: homepage.php');
+    header('Location: index.php');
 }
 ?>
 
