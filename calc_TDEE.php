@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Creative - Start Bootstrap Theme</title>
+    <title>DIFYM</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -42,10 +42,18 @@
 	-->
     <?php 
 		session_start(); 
-		include_once('isLoggedIn.php');
+		
+        if(isset($_SESSION['user'])){
+        include_once('isLoggedIn.php');
 		$weight = $_SESSION['user_weight']; 
 		$height = $_SESSION['user_height'];
-		$age = $_SESSION['user_age'];  
+		$age = $_SESSION['user_age']; 
+        } 
+        else{
+            $weight = 150; 
+            $height = 60;
+            $age    = 20;
+        }
 	?>
 
 </head>
@@ -75,25 +83,18 @@ if(isset($_GET["weight"]) ){
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand page-scroll" href="#page-top">Start Bootstrap</a>
+                <a class="navbar-brand page-scroll" href="#page-top">DIFYM</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a class="page-scroll" href="#about">About</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="#services">Services</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="#portfolio">Portfolio</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="#contact">Contact</a>
-                    </li>
-                </ul>
+                <?php 
+                    if(isset($_SESSION['user'])){
+                        include_once('navBars/nav_loggedIn.html');
+                    }else{
+                        include_once('navBars/nav_NotloggedIn.html');
+                    }
+                ?>
             </div>
             <!-- /.navbar-collapse -->
         </div>
@@ -103,10 +104,10 @@ if(isset($_GET["weight"]) ){
     <header>
         <div class="header-content">
             <div class="header-content-inner">
-                <h1 id="homeHeading">Your Favorite Source of Free Bootstrap Themes</h1>
+                <h1 id="homeHeading">Macro Calculator</h1>
                 <hr>
-                <p>Start Bootstrap can help you build better websites using the Bootstrap CSS framework! Just download your template and start going, no strings attached!</p>
-                <a href="#about" class="btn btn-primary btn-xl page-scroll">Find Out More</a>
+                <p>Check out the calculators below to find out your daily macros. </p>
+                <a href="#about" class="btn btn-primary btn-xl page-scroll">Calculate My Macros!</a>
             </div>
         </div>
     </header>
@@ -128,26 +129,28 @@ if(isset($_GET["weight"]) ){
 						</div>
 						<div class="checkbox">
 						 	<label>
-						    	<input type="checkbox" value="1.2" id="activityLevel" name="activityLevel"> Sedetary 
+						    	<input type="checkbox" value="1.2" id="activityLevel" class="activityLevel"> Sedetary 
 						    </label>
 						</div>
 						<div class="checkbox">
 						 	<label>
-						    	<input type="checkbox" value="1.375" id="activityLevel" name="activityLevel"> Light Activity 
+						    	<input type="checkbox" value="1.375" id="activityLevel" class="activityLevel"> Light Activity 
 						    </label>
 						</div>
 						<div class="checkbox">
 						 	<label>
-						    	<input type="checkbox" value="1.55" id="activityLevel" name="activityLevel"> Moderate Acctivity 
+						    	<input type="checkbox" value="1.55" id="activityLevel" class="activityLevel"> Moderate Acctivity 
 						    </label>
 						</div>
 						<div class="checkbox">
 						 	<label>
-						    	<input type="checkbox" value="1.725" id="activityLevel" name="activityLevel"> Very Active 
+						    	<input type="checkbox" value="1.725" id="activityLevel" class="activityLevel"> Very Active 
 						    </label>
 						</div>
 						<div class ="form-group">
+                        <a class="page-scroll" href="#about">
 							<input type="submit" class = "page-scroll btn btn-primary btn-xl sr-button" value="Submit" id ="DisplaySubmit">
+                        </a>
 						</div>
 					<!-- </form> -->
 
@@ -204,9 +207,9 @@ function myFunction(){
 	var height = document.getElementById('height').value; 
 	var weight = document.getElementById('weight').value; 
 	var age = document.getElementById('age').value; 
-	var activityLevel = document.getElementById('activityLevel').value;
-	console.log(height);
-	console.log(activityLevel);
+	var activityLevel = check_Checkbox(); 
+/*	console.log(height);
+	console.log("ACT LEVEL "+ check_Checkbox());*/
 	$.ajax({
 	      url: "display_TDEE.php",
 	      type: "POST",
@@ -216,13 +219,26 @@ function myFunction(){
 	      		  'activityLevel' : activityLevel  
 	            }
 	    }).done(function( msg ) {
-	    	console.log(msg);
-	    /*	$('#displayDiv span').empty(); */   
+	    /*	console.log(msg);*/ 
+	    	$('#displayDiv').empty(); 
 	      	$("#displayDiv").show();
 	      	$('#displayDiv').append(msg);
 	    /*  	$(msg).appendTo('#displayDiv span') ;*/
 	    });
 	}
+
+function check_Checkbox(){
+    var checkedValue = null; 
+    var inputElements = document.getElementsByClassName('activityLevel');
+    for(var i=0; inputElements[i]; ++i){
+          if(inputElements[i].checked){
+               checkedValue = inputElements[i].value;
+                /*console.log(checkedValue);*/
+               return checkedValue; 
+          }
+    }
+    
+}
 </script>
 </body>
 
