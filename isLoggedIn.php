@@ -1,14 +1,18 @@
 <?php
-    $user = $_SESSION['user']; 
-    include_once('dbConnect.php');
+    if(isset($_SESSION['user'])){
 
-    $sql = "SELECT * FROM User_info i, User_body b WHERE i.userID = $user AND b.userID = $user"; 
-	$result = $conn->query($sql);
+        $user = $_SESSION['user']; 
+        include_once('dbConnect.php');
+        $sql = "SELECT * FROM User_info i, User_body b WHERE i.userID = $user AND b.userID = $user"; 
+        $result = $conn->query($sql);
+
 
     try
     {
+
         if($user)
         {
+
         	if ($result->num_rows > 0) {
         		while($row = $result->fetch_assoc()) {
         			$_SESSION['user_weight'] = $row['current_weight']; 
@@ -28,7 +32,10 @@
         echo $e->getMessage();
     }
     
-
+}
+else {
+    echo "You must be logged in to complete this action";
+}
 
 
 ?>

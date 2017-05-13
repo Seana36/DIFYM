@@ -6,7 +6,7 @@
     include('dbConnect.php');
     session_start();
     if(isset($_SESSION['user'])){
-    echo "<script> console.log('User #: ".$_SESSION['user']."'); </script>"; 
+    echo "<script> console.log('User is logged in'); </script>"; 
 }
     //include('isLoggedIn.php');
 /*    if(isset($_SESSION['user'])){
@@ -66,7 +66,7 @@
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand page-scroll" href="#page-top">DIFYM?</a>
+                <a class="navbar-brand page-scroll" href="#page-top">DIFYM</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -138,7 +138,7 @@
 
 					<div class ="form-group">
 					<a class="page-scroll" href="#Search_Results">
-						<input type="submit" id = "MacroButton" class = "btn btn-default btn-xl sr-button" value="Submit_Macro"  >
+						<input type="submit" id = "MacroButton" class = "btn btn-default btn-xl sr-button" value="Submit Macro"  >
 					</a>
 					</div>
 					<!-- </form> -->
@@ -157,22 +157,22 @@
                              <input id="cal_max" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="500" data-slider-step="5" data-slider-value="250"/>
                         </div> 
 						<div class ="form-group">
-							<input type="submit" id = "CalorieButton" class = "btn btn-default btn-xl sr-button" value="Submit_Cal" id="Submit_Cal" >
+                        <a class="page-scroll" href="#Search_Results">
+							<input type="submit" id = "CalorieButton" class = "btn btn-default btn-xl sr-button" value="Submit Cal" >
+                        </a>
 						</div>					
                 </div>
                 <div class="col-lg-4 col-lg-offset-0 text-center">
                     <h2 class="section-heading">Look up by Name</h2>
                     <hr class="light">
-                    <!-- <form action="foodRecommender_output_cal.php" method="post"> -->
                         <div class ="form-group">
                             Name: <input type="text" id = "name" name="name" style ="color:black">
                         </div>
                         <div class ="form-group">
-                        <!-- <a class="page-scroll" href="#Search_Results"> -->
-                            <input type="submit" id = "NameButton" class = "btn btn-default btn-xl sr-button" value="Submit_Name" id="Submit_Name" >
-                            <!-- </a> -->
+                        <a class="page-scroll" href="#Search_Results">
+                            <input type="submit" id = "NameButton" class = "btn btn-default btn-xl sr-button" value="Submit Name" >
+                        </a>
                         </div>                  
-                    <!-- </form> -->
                 </div>
             </div>
         </div>

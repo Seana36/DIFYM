@@ -31,8 +31,7 @@ if( isset($_POST['fat_min']) ){
   echo "<script> console.log('{FatMax}: ".$carbMax."'); </script>"; 
   echo "<script> console.log('{FatMin}: ".$protMin."'); </script>"; 
   echo "<script> console.log('{FatMax}: ".$protMax."'); </script>"; 
-/*  $carbs = intval($_POST['carbs']); */
-/*  $prot = 10;*/
+
   if(isset($_SESSION['user'])){
     $user = $_SESSION['user']; 
     $sql222 = "SELECT Vegetarian FROM user_pref WHERE userID = $user "; 
@@ -44,6 +43,7 @@ if( isset($_POST['fat_min']) ){
     }
 
   } else {
+    $veggie = 'N';
     echo "<script> console.log('You are not logged in') </script>";
   }
   
@@ -55,31 +55,41 @@ if( isset($_POST['fat_min']) ){
 #Lipid_Tot_g BETWEEN 5 AND 10 AND 
 #Carbohydrt_g BETWEEN 5 AND 10 AND 
 #Shrt_Desc NOT LIKE '%MILK%'
+#
+#  SELECT m.Shrt_Desc, f.count, m.NDB_No, m.Energ_Kcal, m.Protein_g, m.Carbohydrt_g, m.Lipid_Tot_g
+#    FROM mytable m, freq_item f  
+#    WHERE Shrt_Desc 
+#    LIKE '%$name%'
+#    ORDER BY f.count DESC, Energ_Kcal, Protein_g ASC, Carbohydrt_g ASC
 
 
 
 if ($veggie == 'Y'){
   echo "<script> console.log('You are a veggie') </script>"; 
-  $sql = "SELECT * FROM mytable WHERE 
-    Protein_g BETWEEN $protMin AND $protMax  AND
-    Lipid_Tot_g BETWEEN $fatMin AND $fatMax AND
-    Carbohydrt_g BETWEEN $carbMin AND $carbMax AND
-    Shrt_Desc NOT LIKE '%MEAT%' AND
-    Shrt_Desc NOT LIKE '%PORK%' AND
-    Shrt_Desc NOT LIKE '%BACON%' AND 
-    Shrt_Desc NOT LIKE '%CHICKEN%' AND
-    Shrt_Desc NOT LIKE '%HAMBURGER%' AND 
-    Shrt_Desc NOT LIKE '%SALMON%' AND 
-    Shrt_Desc NOT LIKE '%SHRIMP%' AND 
-    Shrt_Desc NOT LIKE '%TURKEY%'
+  $sql = "SELECT m.Shrt_Desc, f.count, m.NDB_No, m.Energ_Kcal, m.Protein_g, m.Carbohydrt_g, m.Lipid_Tot_g
+          FROM mytable m, freq_item f
+          WHERE
+          Protein_g BETWEEN $protMin AND $protMax  AND
+          Lipid_Tot_g BETWEEN $fatMin AND $fatMax AND
+          Carbohydrt_g BETWEEN $carbMin AND $carbMax AND
+          Shrt_Desc NOT LIKE '%MEAT%' AND
+          Shrt_Desc NOT LIKE '%PORK%' AND
+          Shrt_Desc NOT LIKE '%BACON%' AND 
+          Shrt_Desc NOT LIKE '%CHICKEN%' AND
+          Shrt_Desc NOT LIKE '%HAMBURGER%' AND 
+          Shrt_Desc NOT LIKE '%SALMON%' AND 
+          Shrt_Desc NOT LIKE '%SHRIMP%' AND 
+          Shrt_Desc NOT LIKE '%TURKEY%'
     ";
 }
 else {
-  echo "<script> console.log('You are NOT veggie".$veggie."') </script>";
-  $sql = "SELECT * FROM mytable WHERE 
-    Protein_g BETWEEN $protMin AND $protMax  AND
-    Lipid_Tot_g BETWEEN $fatMin AND $fatMax AND
-    Carbohydrt_g BETWEEN $carbMin AND $carbMax
+  echo "<script> console.log('You are NOT veggie') </script>";
+  $sql = "SELECT m.Shrt_Desc, f.count, m.NDB_No, m.Energ_Kcal, m.Protein_g, m.Carbohydrt_g, m.Lipid_Tot_g
+          FROM mytable m, freq_item f
+          WHERE
+          Protein_g BETWEEN $protMin AND $protMax  AND
+          Lipid_Tot_g BETWEEN $fatMin AND $fatMax AND
+          Carbohydrt_g BETWEEN $carbMin AND $carbMax
     ";
 }
 $result = $conn->query($sql);
@@ -89,6 +99,7 @@ $result = $conn->query($sql);
   echo "You are searching for fat between: $fatMin and $fatMax. <br>
         You are searching for carbs between: $carbMin and $carbMax. <br>
         You are searching for protein between: $protMin and $protMax. ";
+
 ?>
 <table class="table table-striped sortable">
 		<thead>
@@ -105,7 +116,7 @@ $result = $conn->query($sql);
     	</thead>
    		<tbody>
 			<?php
-
+      
 
             if ($result->num_rows > 0) {
                 // output data of each row
@@ -125,7 +136,7 @@ $result = $conn->query($sql);
                           </tr>";
                 }
             } else {
-                echo "There were no foods with those macros, please try again. ";
+                echo "<br> <b>There were no foods with those macros, please try again. </b>";
             }
 
             ?>

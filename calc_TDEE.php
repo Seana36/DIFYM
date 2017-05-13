@@ -152,9 +152,6 @@ if(isset($_GET["weight"]) ){
 							<input type="submit" class = "page-scroll btn btn-primary btn-xl sr-button" value="Submit" id ="DisplaySubmit">
                         </a>
 						</div>
-					<!-- </form> -->
-
-
                 </div>
             </div>
         </div>
@@ -208,8 +205,6 @@ function myFunction(){
 	var weight = document.getElementById('weight').value; 
 	var age = document.getElementById('age').value; 
 	var activityLevel = check_Checkbox(); 
-/*	console.log(height);
-	console.log("ACT LEVEL "+ check_Checkbox());*/
 	$.ajax({
 	      url: "display_TDEE.php",
 	      type: "POST",
@@ -219,11 +214,9 @@ function myFunction(){
 	      		  'activityLevel' : activityLevel  
 	            }
 	    }).done(function( msg ) {
-	    /*	console.log(msg);*/ 
 	    	$('#displayDiv').empty(); 
 	      	$("#displayDiv").show();
 	      	$('#displayDiv').append(msg);
-	    /*  	$(msg).appendTo('#displayDiv span') ;*/
 	    });
 	}
 
@@ -239,53 +232,9 @@ function check_Checkbox(){
     }
     
 }
+
 </script>
 </body>
 
 
-</html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</body>
 </html>

@@ -1,5 +1,6 @@
 <?php 
 
+	session_start(); 
 
 	if(isset($_POST['weight']) ){ 
 
@@ -42,13 +43,41 @@
 	    <td><?php echo number_format($protein,2)?></td>
 	  </tr>
 	</table>
+
 	<?php 
 	if(isset($_SESSION['user'])){ ?>
 		<div class ='form-group'>
 		Save these macros 
 			<input type='submit' id = 'SubmitMacros' class = 'page-scroll btn btn-default btn-xl sr-button' value='Save_Macros'>
 		</div>
-	<?php }	?>
+
+		<script>
+		document.getElementById("SubmitMacros").onclick = function() {myFunction_Macros()};
+		function myFunction_Macros(){
+		    console.log('myfunction');
+		    var cal = <?php json_encode($TDEE) ?>; 
+		    var fat = <?php json_encode($fat) ?>; 
+		    var carb = <?php json_encode($carb) ?>; 
+		    var prot = <?php json_encode($protein) ?>; 
+		    $.ajax({
+		          url: "saveMacrostoDB.php",
+		          type: "POST",
+		          data: { 'cal':cal,
+		                  'fat':fat,
+		                  'carb':carb,
+		                  'prot':prot 
+		                }
+		        }).done(function( msg ) {
+		            alert(msg);
+		        });
+		    }
+		</script>
+	<?php }	//if isset 
+	else {
+		echo "user not logged in rn";
+	}
+	?>
+
 
 	<?php  
 	}

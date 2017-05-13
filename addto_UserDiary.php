@@ -2,6 +2,8 @@
 session_start(); 
 include_once('dbConnect.php');
 include_once('isLoggedIn.php');
+if(isset($_SESSION['user'])){
+
  
 $user = $_SESSION['user']; 
 $id = intval($_POST['ID']);
@@ -61,6 +63,10 @@ if ($result === TRUE) {
 } else {
     echo "Error: " . $sql . "<br>" . $conn->error;
 }
+}//isset user
+/*else {
+	echo "You are not Logged in right now";
+}*/
 
 //exit;
 ?>

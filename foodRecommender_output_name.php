@@ -6,14 +6,16 @@ if( isset($_POST["name"]) ){
 	$name = $_POST["name"];
 echo "<script> console.log('Hello $name'); </script> ";
 
-$sql = "SELECT * FROM mytable WHERE 
-		Shrt_Desc LIKE '%$name%'
-		ORDER BY Energ_Kcal, Protein_g ASC, Carbohydrt_g ASC
+$sql = "SELECT m.Shrt_Desc, f.count, m.NDB_No, m.Energ_Kcal, m.Protein_g, m.Carbohydrt_g, m.Lipid_Tot_g
+		FROM mytable m, freq_item f  
+		WHERE Shrt_Desc 
+		LIKE '%$name%'
+		ORDER BY f.count DESC, Energ_Kcal, Protein_g ASC, Carbohydrt_g ASC
 		";
 $result = $conn->query($sql);
 ?> 
 <div class = "container">
-You are searching for Name between like <?php echo $name ?> <br>  
+You are searching for Name like <?php echo $name ?> <br>  
 	<table class="table table-striped sortable">
 		<thead>
 	      <tr>

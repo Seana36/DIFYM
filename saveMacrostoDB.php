@@ -10,10 +10,6 @@ if(isset($_SESSION['user'])){
 		$carb = $_POST['carb'];
 		$prot = $_POST['prot']; 
 		$cal = $_POST['cal']; 
-/*
-		echo $fat; 
-		echo $carb;
-		echo $prot; */
 
 	$sql = "UPDATE user_body 
 			SET goal_cal = $cal, 
